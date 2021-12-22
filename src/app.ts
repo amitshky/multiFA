@@ -7,7 +7,7 @@ const secretKey: string =  'OM4EU4DLNUVGCTROG4QUST3MM52SCRLPGJYHCPRQN45UCYJOKAQQ
 
 const app: express.Application = express();
 
-app.use(express.static('./src/public/'));            // static assets
+app.use(express.static('./public/'));            // static assets
 app.use(express.urlencoded({ extended: true })); // parse data
 app.use(express.json());                         // parse json
 
