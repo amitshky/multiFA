@@ -16,10 +16,13 @@ app.get('/', (req: express.Request, res: express.Response) => res.status(200).se
 app.get('/totp/generate', (req: express.Request, res: express.Response) =>
 {
 	const secret: speakeasy.GeneratedSecret = speakeasy.generateSecret( { name: "Skeeob" });
-	qrcode.toDataURL(secret.otpauth_url!, (err, data) => 
+	qrcode.toDataURL(secret.otpauth_url!, (err: Error, data: string) => 
 	{
 		if (err)
-			return res.status(500).send(err);
+		{
+			console.log(err);
+			return res.status(500).send('Unable to generate QR code!');
+		}
 		else
 		{
 			const qrcodeData: string = "<img src=\"" + data + "\">\n" +
