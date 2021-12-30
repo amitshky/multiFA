@@ -29,7 +29,12 @@ npm run server
 You can then open postman.
 
 ## Output
-Open postman and create a POST HTTP request as shown:
+Open postman and create a POST HTTP request along with the body as shown below and send the request.\
+![](img/postmanCreateUser.png)
+![](img/postmanCreateUserBody.png)
 
-You should see the json as shown:
+You should see a similar json as shown below.\
+![](img/postmanCreateUserOutput.png)
+
+The user details should also be added to the database.
 
