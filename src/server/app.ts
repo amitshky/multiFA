@@ -1,9 +1,9 @@
 import config from 'config'
 import express from 'express'
 
-import logger from './common/logger'
-import connect from './common/db/connect'
-import routes from './server/routes'
+import logger from '../common/logger'
+import connect from '../common/db/connect'
+import routes from './routes'
 
 
 const HOST = config.get('host') as string;
