@@ -40,7 +40,7 @@ You can then open postman.
 * The user details should also be added to the database.
 
 ### Login Session
-* Open postman and create a POST HTTP request along with the body as shown below and send the request.\
+* Open postman and create a POST HTTP request along with the body as shown below and send the request. (The email and password should be of a registered user)\
 ![](img/postmanLoginCreateSession.png)
 ![](img/postmanLoginCreateSessionBody.png)
 
