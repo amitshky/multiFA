@@ -29,12 +29,26 @@ npm run server
 You can then open postman.
 
 ## Output
-Open postman and create a POST HTTP request along with the body as shown below and send the request.\
+### Create a user (User Registration)
+* Open postman and create a POST HTTP request along with the body as shown below and send the request.\
 ![](img/postmanCreateUser.png)
 ![](img/postmanCreateUserBody.png)
 
-You should see a similar json as shown below.\
+* You should see a similar json as shown below.\
 ![](img/postmanCreateUserOutput.png)
 
-The user details should also be added to the database.
+* The user details should also be added to the database.
 
+### Login Session
+* Open postman and create a POST HTTP request along with the body as shown below and send the request.\
+![](img/postmanLoginCreateSession.png)
+![](img/postmanLoginCreateSessionBody.png)
+
+* You should see a similar json as shown below.\
+![](img/postmanLoginCreateSessionOutput.png)
+
+* You can then create environment varialbes for `accessToken` and `refreshToken`
+![](img/postmanLoginSessionEnv.png)
+
+* Then add the following to the headers for GET and DELETE HTTP methods for `/api/sessions`
+![](img/![](img/postmanLoginSessionHeaders.png).png)
