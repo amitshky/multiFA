@@ -47,8 +47,8 @@ You can then open postman.
 * You should see a similar json as shown below.\
 ![](img/postmanLoginCreateSessionOutput.png)
 
-* You can then create environment varialbes for `accessToken` and `refreshToken`
+* You can then create environment varialbes for `accessToken` and `refreshToken`\
 ![](img/postmanLoginSessionEnv.png)
 
-* Then add the following to the headers for GET and DELETE HTTP methods for `/api/sessions`
-![](img/![](img/postmanLoginSessionHeaders.png).png)
+* Then add the following to the headers for GET and DELETE HTTP methods for `/api/sessions`\
+![](img/postmanLoginSessionHeaders.png)
