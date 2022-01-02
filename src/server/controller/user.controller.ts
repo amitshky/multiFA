@@ -10,7 +10,9 @@ export const createUserHandler = async (req: Request, res: Response) =>
 	try
 	{
 		const user = await createUser(req.body);
-		return res.json(omit(user.toJSON(), 'password')); // omit becuz deleting mutates the object 
+		const qrData = user.generateSSKey();
+		user.save();
+		return res.json(omit(user.toJSON(), 'password', 'sskey')); // omit becuz deleting mutates the object 
 	}
 	catch (err: any)
 	{

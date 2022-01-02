@@ -5,7 +5,7 @@ import { LeanDocument } from 'mongoose'
 
 import { UserDocument } from '../model/user.model'
 import { SessionDocument } from '../model/session.model'
-import { validatePassword } from '../service/user.service'
+import { validatePassword, validateTOTP } from '../service/user.service'
 import { 
 	createSession, 
 	createAccessToken, 
@@ -18,10 +18,14 @@ import { sign } from '../utils/jwt.utils'
 export const createUserSessionHandler = async (req: Request, res: Response) =>
 {
 	// validate email and password
-	const user = await validatePassword(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
+	let user = await validatePassword(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 
 	if (!user)
-		return res.status(401).send('Invalid username or password');
+		return res.status(401).send('Invalid email or password');
+		
+	user = await validateTOTP(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
+	if (!user)
+		return res.status(401).send('Invalid code');
 
 	// create a session
 	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;

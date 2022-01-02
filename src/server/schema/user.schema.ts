@@ -1,4 +1,4 @@
-import { object, string, ref } from 'yup' // schema builder and validation
+import { object, string, ref, number } from 'yup' // schema builder and validation
 
 export const createUserSchema = object({
 	body: object({
@@ -23,6 +23,11 @@ export const createUserSessionSchema = object({
 		password: string()
 			.required('Password is required')
 			.matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-				'The Password must contain at least 8 characters, one uppercase, one lowercase, one Number and one special-case character')
+				'The Password must contain at least 8 characters, one uppercase, one lowercase, one Number and one special-case character'),
+		token: string()
+			.required('Token is required')
+			.matches(/^[0-9]+$/, 'The token must be digits')
+			.min(6, 'The token must be exactly 6 digits')
+			.max(6, 'The token must be exactly 6 digits')
 	})
 });
