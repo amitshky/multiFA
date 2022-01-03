@@ -1,4 +1,4 @@
-import logger from './multiFA/src/common/logger/index.ts'
+import logger from '../../src/common/logger'
 
 let messages = []
 
@@ -18,7 +18,7 @@ document.addEventListener('submit',function (evt) {
     evt.preventDefault();
     const userLoginDetail = (Array.from(document.querySelectorAll('#loginForm input')).reduce((acc, input)=>({...acc,[input.id]:input.value}), {}));
     const userLoginJson = JSON.stringify(userLoginDetail);
-    logger.info(userLoginJson);
+    console.log(userLoginJson);
     
 })
 
