@@ -9,7 +9,7 @@ export const createUserSchema = object({
 		password: string()
 			.required('Password is required')
 			.matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-				'The Password must contain at least 8 characters, one uppercase, one lowercase, one Number and one special-case character'),
+				'The password must contain at least 8 characters, one uppercase, one lowercase, one number and one special-case character'),
 		passwordConfirmation: string()
 			.oneOf([ref('password'), null], 'The passwords must match')
 	})
@@ -23,7 +23,7 @@ export const createUserSessionSchema = object({
 		password: string()
 			.required('Password is required')
 			.matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-				'The Password must contain at least 8 characters, one uppercase, one lowercase, one Number and one special-case character'),
+				'The password must contain at least 8 characters, one uppercase, one lowercase, one number and one special-case character'),
 		token: string()
 			.required('Token is required')
 			.matches(/^[0-9]+$/, 'The token must be digits')
