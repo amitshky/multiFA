@@ -1,3 +1,5 @@
+import logger from './multiFA/src/common/logger/index.ts'
+
 let messages = []
 
 function setFormMessage(formElement, type, message) {
@@ -12,18 +14,17 @@ document.addEventListener("DOMContentLoaded", () =>{
     const loginForm = document.querySelector("#login");
 });
 
-/*document.addEventListener('submit',(e) =>{
+document.addEventListener('submit',function (evt) {
+    evt.preventDefault();
+    const userLoginDetail = (Array.from(document.querySelectorAll('#loginForm input')).reduce((acc, input)=>({...acc,[input.id]:input.value}), {}));
+    const userLoginJson = JSON.stringify(userLoginDetail);
+    logger.info(userLoginJson);
+    
+})
 
-    e.preventDefault()
-});
-*/
-const userLoginDetail = (Array.from(document.querySelectorAll('#loginForm input')).reduce((acc, input)=>({...acc,[input.id]:input.value}), {}));
-const userLoginJson = JSON.stringify(userLoginDetail);
 
-//console.log(userLoginDetail.username.length);
+// if (userLoginDetail.password.length < 8) {
+//     messages.push('please enter a valid password')
+// }
 
-if (userLoginDetail.password.length < 8) {
-    messages.push('please enter a valid password')
-}
-
-console.log(userLoginJson);
+// console.log(userLoginJson);
