@@ -5,7 +5,6 @@ body{
     --color-error: #cc3333;
     --color-success: #4bb544;
     --border-radius: 4px;
-    --bg-image: url("/src/bg.jpg");
 
     margin: 0;
     height: 100vh;
