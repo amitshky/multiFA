@@ -1,5 +1,3 @@
-import logger from '../../src/common/logger'
-
 let messages = []
 
 function setFormMessage(formElement, type, message) {

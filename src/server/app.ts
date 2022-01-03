@@ -12,6 +12,7 @@ const PORT = config.get('port') as number;
 const app  = express();
 
 // middleware
+app.use(express.static('./public/'));
 app.use(deserializeUser);
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
