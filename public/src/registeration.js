@@ -6,4 +6,4 @@ userRegisterDetail = (Array.from(document.querySelectorAll('#registrationForm in
 const userRegJson = JSON.stringify(userRegisterDetail);
 console.log(userRegJson);
 
-document.addEventListener('submit',)
+// document.addEventListener('submit',)
