@@ -20,13 +20,12 @@ export const createUserSessionHandler = async (req: Request, res: Response) =>
 {
 	// validate email and password
 	let user = await validatePassword(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
-
 	if (!user)
 		return res.status(401).send('Invalid email or password');
 		
 	user = await validateTOTP(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 	if (!user)
-		return res.status(401).send('Invalid code');
+		return res.status(401).send('Invalid token');
 
 	// create a session
 	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;
