@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MultiFA</title>
+	<link rel="shortcut icon" href="#">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+	<div class="container">
+		<form action="/api/sessions" id="loginForm" class="form" method="POST">
+			<h1 class="form__title">Login</h1>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "text" 
+					name          = "email" 
+					id            = "email" 
+					placeholder   = "Email"
+					autofocus
+					required
+				/>
+			</div>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "password" 
+					name          = "password" 
+					id            = "password" 
+					placeholder   = "Password"
+					autofocus
+					required
+				/>
+			</div>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "text" 
+					name          = "token" 
+					id            = "token" 
+					placeholder   = "Token"
+					autofocus
+					required
+				/>
+			</div>
+			<button type="submit" class="form__button">Continue</button>
+			<p class="form__text">
+				<a class="form__link" href="/register" id='linkCreateAccount'>Need an account? Create One</a>
+			</p>
+		</form>
+	</div>
+</body>
+</html>
