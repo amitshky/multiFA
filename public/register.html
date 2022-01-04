@@ -1,46 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
-    <link rel="shortcut icon" href="#">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./src/main.css">
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>MultiFA</title>
+	<link rel="shortcut icon" href="#">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./styles.css">
 </head>
 <body>
-    <div class="container">
-        <form action="POST" class="form" id="registrationForm">
-            <h1 class="form__title">Register</h1>
-            <div class="form__message form__message--error"></div>
-            <div class="form__input-group">
-                <input type="text" class="form__input" id="username" autofocus placeholder="Username">
-                <div class="form__input-error-message"></div>
-            </div>
-            <div class="form__input-group">
-                <input type="text" class="form__input" id="emailAddr" autofocus placeholder="email address">
-                <div class="form__input-error-message"></div>
-            </div>
-            <div class="form__input-group">
-                <input type="password" class="form__input" id="password" autofocus placeholder="Password">
-                <div class="form__input-error-message"></div>
-            </div>
-            <div class="form__input-group">
-                <input type="password" class="form__input" id="confPassword" autofocus placeholder="Confirm Password">
-                <div class="form__input-error-message"></div>
-            </div>
-            <button class="form__button" type="submit">Continue</button>
-            <!-- <p class="form__text">
-                 <a href="#" class="form__link">Forgot your Password?</a>
-            </p> -->
-            <p class="form__text">
-                <a class="form__link" href="/login" id='linkLogin'>Already have an account? Sign In</a>
-            </p>
-        </form>
-    </div>
-    <script src="./src/registeration.js"></script>
+	<div class="container">
+		<form action="/api/users" id="registrationForm" class="form" method="POST">
+			<h1 class="form__title">Register</h1>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "text" 
+					name          = "username" 
+					id            = "username" 
+					placeholder   = "Username"
+					autofocus
+					required
+				/>
+			</div>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "text" 
+					name          = "email" 
+					id            = "email" 
+					placeholder   = "Email"
+					autofocus
+					required
+				/>
+			</div>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "password" 
+					name          = "password" 
+					id            = "password" 
+					placeholder   = "Password"
+					autofocus
+					required
+				/>
+			</div>
+			<div class="form__input-group">
+				<input 
+					class         = "form__input"
+					type          = "password" 
+					name          = "passwordConfirmation" 
+					id            = "passwordConfirmation" 
+					placeholder   = "Password confirmation"
+					autofocus
+					required
+				/>
+			</div>
+			<button type="submit" class="form__button">Continue</button>
+			<p class="form__text">
+				<a class="form__link" href="/login" id='linkCreateAccount'>Already have an account? Sign In</a>
+			</p>
+		</form>
+	</div>
 </body>
 </html>
