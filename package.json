@@ -4,7 +4,8 @@
   "description": "Multi-factor Authentication",
   "main": "index.js",
   "scripts": {
-    "build": "tsc -p .",
+    "build": "tsc -p . && copyfiles -u 1 public/**/*.html public/**/*.css build/public/",
+    "server-js": "node build/src/server/app.js",
     "server": "nodemon src/server/app.ts"
   },
   "repository": {
@@ -42,6 +43,7 @@
     "@types/qrcode": "^1.4.2",
     "@types/speakeasy": "^2.0.7",
     "@types/yup": "^0.29.13",
+    "copyfiles": "^2.4.1",
     "nodemon": "^2.0.15",
     "ts-node": "^10.4.0",
     "typescript": "^4.5.4"

@@ -18,12 +18,20 @@ Install project packages
 npm install
 ```
 ### Build
-To start the server (runs nodemon for `src/server/app.ts`):
+* To start the server (runs nodemon for `src/server/app.ts`). This will directly run the typescript files without building javascript files.
 ```
 npm run server
 ```
+* You can then open `http://localhost:5000`.
 
-You can then open `http://localhost:5000`.
+
+OR,
+* To build and run javascript files 
+```
+npm run build
+npm run server-js
+```
+* You can then open `http://localhost:5000`.
 
 ## Output
 ### User Registration
