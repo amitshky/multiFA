@@ -6,7 +6,10 @@ body{
     --color-link: #5273A4;
     --color-error: #BD4848;
     --color-success: #9B95BD;
+    --color-label: #6A6A6A;
     --border-radius: 4px;
+
+    --samllText: 0.9em;
 
     margin: 0;
     height: 100vh;
@@ -19,8 +22,8 @@ body{
 }
 
 .container{
-    width: 400px;
-    max-width: 400px;
+    width: 500px;
+    max-width: 500px;
     margin: 1rem;
     padding: 2rem;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -163,4 +166,12 @@ body{
 
 .form__link:hover{
     text-decoration: underline;
+}
+
+label{
+    display: block;
+    color: var(--color-label);
+    font-size: var(--samllText);
+    margin-bottom: 1.0rem;
+    text-transform: none;
 }

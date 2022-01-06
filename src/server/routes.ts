@@ -7,7 +7,8 @@ import { createUserHandler } from './controller/user.controller'
 import { 
 	createUserSessionHandler, 
 	getUserSessionsHandler, 
-	invalidateUserSessionHandler 
+	invalidateUserSessionHandler,
+	twoFASessionHandler
 } from './controller/session.controller'
 
 
@@ -19,6 +20,8 @@ const routes = (app: Express): void =>
 
 	// login page
 	app.get('/login', (req: Request, res: Response) => res.sendFile(publicPath + '/login.html'));
+	// 2fa page
+	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
 	
 	// register page
 	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
@@ -28,6 +31,8 @@ const routes = (app: Express): void =>
 
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
+	// check totp
+	app.post('/api/sessions/check-2fa', twoFASessionHandler);
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);

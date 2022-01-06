@@ -24,10 +24,10 @@ export const createUserSessionSchema = object({
 			.required('Password is required')
 			.matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
 				'The password must contain at least 8 characters, one uppercase, one lowercase, one number and one special-case character'),
-		token: string()
-			.required('Token is required')
-			.matches(/^[0-9]+$/, 'The token must be digits')
-			.min(6, 'The token must be exactly 6 digits')
-			.max(6, 'The token must be exactly 6 digits')
+		//token: string()
+		//	.required('Token is required')
+		//	.matches(/^[0-9]+$/, 'The token must be digits')
+		//	.min(6, 'The token must be exactly 6 digits')
+		//	.max(6, 'The token must be exactly 6 digits')
 	})
 });
