@@ -32,7 +32,7 @@ const routes = (app: Express): void =>
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
 	// check totp
-	app.post('/api/sessions/check-2fa', twoFASessionHandler);
+	app.post('/api/sessions/check-2fa', twoFASessionHandler); // TODO: modify requiresUser middleware and use it here
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
