@@ -51,5 +51,5 @@ OR,
 ![](img/login.png)
 
 ### TOTP verification
-* After login:
+* After login:\
 ![](img/totp.png)
