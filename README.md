@@ -20,7 +20,7 @@ These should be globally installed:
 	PUBLIC_KEY = '<ENTER_YOUR_PUBLIC_KEY_HERE>'
 	```
 
-* Type these commands by opening the command prompt (for windows) in the root directory of this repository. This installs the project packages.\
+* Type these commands by opening the command prompt (for windows) in the root directory of this repository. This installs the project packages.
 	```
 	npm install
 	```
