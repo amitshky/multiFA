@@ -2,7 +2,7 @@ import { omit } from 'lodash'
 import { DocumentDefinition, FilterQuery } from 'mongoose'
 
 import logger from '../../common/logger'
-import User, { UserDocument } from '../model/user.model'
+import User, { UserDocument, privateFields } from '../model/user.model'
 
 export const createUser = async (input: DocumentDefinition<UserDocument>) =>
 {
@@ -27,12 +27,12 @@ export const validatePassword = async ({ email, password }: { email: UserDocumen
 	if (!isValid)
 		return false;
 	
-	return omit(user.toJSON(), 'password', 'sskey'); 
+	return omit(user.toJSON(), privateFields); 
 }
 
-export const validateTOTP = async ({ email, token }: { email: UserDocument['email'], token: string }) =>
+export const validateTOTP = async ({ userID, token }: { userID: string, token: string }) =>
 {
-	const user = await User.findOne({ email: email });
+	const user = await User.findOne({ _id: userID });
 	if (!user)
 		return false;
 	
@@ -40,7 +40,7 @@ export const validateTOTP = async ({ email, token }: { email: UserDocument['emai
 	if (!isValid)
 		return false;
 	
-	return omit(user.toJSON(), 'password', 'sskey');
+	return omit(user.toJSON(), privateFields);
 }
 
 export const findUser = async (query: FilterQuery<UserDocument>) => User.findOne(query).lean(); // lean returns plain old js objects (POJOs) instead of mongoose document // faster queries

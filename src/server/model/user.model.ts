@@ -4,6 +4,8 @@ import config from 'config' // defaults
 import speakeasy from 'speakeasy' // totp
 
 
+export const privateFields = ['password', 'sskey', '__v']; // private fields of the db that you dont want to send as json
+
 const UserSchema = new mongoose.Schema({
 	email: {
 		type: String,
@@ -21,7 +23,8 @@ const UserSchema = new mongoose.Schema({
 	},
 	sskey: { // shared secret key for totp verification
 		type: String,
-		required: false
+		required: true,
+		default: 'N/A'
 	}
 }, { timestamps: true });
 
