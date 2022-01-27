@@ -9,3 +9,4 @@ node_modules/
 # generated js files
 build/
 
+.env
