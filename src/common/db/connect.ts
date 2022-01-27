@@ -7,7 +7,7 @@ const dbUri = config.get('dbUri') as string;
 const connect = (): void => 
 {
 	mongoose.connect(dbUri)
-		.then((result: typeof mongoose) => logger.info(`Connected to ${dbUri}`))
+		.then((result: typeof mongoose) => logger.info(`Connected to the database.`))
 		.catch((error: any) => logger.error(error));
 }
 
