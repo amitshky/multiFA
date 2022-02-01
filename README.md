@@ -15,7 +15,7 @@ These should be globally installed:
 * [ts-node](https://www.npmjs.com/package/ts-node) `npm install -g ts-node`
 
 ### Installation
-* Create a file called `.env` in the root directory of this project and copy the contents below. Generate public and private keys using [RSA key generator](https://travistidwell.com/jsencrypt/demo/) and also create a MongoDB cluster using [MongoDB Atlas](https://www.mongodb.com/atlas), replace them to their respective places. The contents of the `.env` file:
+* Create a file called `.env` in the `server` folder and copy the contents below. Generate public and private keys using [RSA key generator](https://travistidwell.com/jsencrypt/demo/) and also create a MongoDB cluster using [MongoDB Atlas](https://www.mongodb.com/atlas), replace them to their respective places. The contents of the `.env` file:
 	```
 	DB_URI = '<ENTER_YOUR_MONGODB_URI_HERE>'
 
@@ -66,16 +66,16 @@ flutter run
 ## Output
 ### User Registration
 * Open `localhost:5000/register`\
-![](img/register.png)
+<img src="img/register.png" width=450>
 * The user details will also be added to the database.
 
 ### Login
 * Open `localhost:5000/login`\
-![](img/login.png)
+<img src="img/login.png" width=450>
 
 ### TOTP verification
 * After login:\
-![](img/totp.png)
+<img src="img/totp.png" width=450>
 
 ### Android Application
-<img src="img/app.png" width=350>
+<img src="img/app.png" width=450>
