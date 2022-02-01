@@ -27,6 +27,7 @@ These should be globally installed:
 	npm install
 	```
 ### Build
+(Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
 * To start the server (runs nodemon for `src/server/app.ts`). This will directly run the typescript files without building javascript files.
 	```
 	cd server
