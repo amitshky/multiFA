@@ -78,4 +78,4 @@ flutter run
 ![](img/totp.png)
 
 ### Android Application
-![](img/app.png | width=100)
+<img src="img/app.png" width=350>
