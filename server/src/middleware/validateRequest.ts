@@ -1,6 +1,6 @@
 import { AnySchema } from 'yup' // schema builder
 import { Request, Response, NextFunction } from 'express'
-import logger from '../../common/logger'
+import logger from '../logger'
 
 
 // currying function

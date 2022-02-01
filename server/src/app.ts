@@ -2,8 +2,8 @@ import config from 'config'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 
-import logger from '../common/logger'
-import connect from '../common/db/connect'
+import logger from './logger'
+import connect from './db/connect'
 import routes from './routes'
 import { deserializeUser } from './middleware'
 

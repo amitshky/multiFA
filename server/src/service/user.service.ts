@@ -1,7 +1,7 @@
 import { omit } from 'lodash'
 import { DocumentDefinition, FilterQuery } from 'mongoose'
 
-import logger from '../../common/logger'
+import logger from '../logger'
 import User, { UserDocument, privateFields } from '../model/user.model'
 
 export const createUser = async (input: DocumentDefinition<UserDocument>) =>

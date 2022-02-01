@@ -13,7 +13,7 @@ import {
 	findSessions 
 } from '../service/session.service'
 import { sign, decode } from '../utils/jwt.utils'
-import logger from '../../common/logger'
+import logger from '../logger'
 
 
 export const createUserSessionHandler = async (req: Request, res: Response) =>

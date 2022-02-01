@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "build": "tsc -p . && copyfiles -u 1 public/**/*.html public/**/*.css build/public/",
-    "server-js": "node build/src/server/app.js",
-    "server": "nodemon src/server/app.ts"
+    "server-js": "node build/src/app.js",
+    "server": "nodemon src/app.ts"
   },
   "repository": {
     "type": "git",

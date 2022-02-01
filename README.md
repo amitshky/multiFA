@@ -20,13 +20,16 @@ These should be globally installed:
 	PUBLIC_KEY = '<ENTER_YOUR_PUBLIC_KEY_HERE>'
 	```
 
-* Type these commands by opening the command prompt (for windows) in the root directory of this repository. This installs the project packages.
+(Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
+* This installs the project packages.
 	```
+	cd server
 	npm install
 	```
 ### Build
 * To start the server (runs nodemon for `src/server/app.ts`). This will directly run the typescript files without building javascript files.
 	```
+	cd server
 	npm run server
 	```
 * You can then open `http://localhost:5000`.
@@ -35,6 +38,7 @@ These should be globally installed:
 OR,
 * To build and run javascript files 
 	```
+	cd server
 	npm run build
 	npm run server-js
 	```

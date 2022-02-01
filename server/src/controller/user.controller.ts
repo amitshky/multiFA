@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import { omit } from 'lodash'
 
-import logger from '../../common/logger'
+import logger from '../logger'
 import { createUser } from '../service/user.service'
 
 

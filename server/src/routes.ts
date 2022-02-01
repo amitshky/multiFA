@@ -12,7 +12,7 @@ import {
 } from './controller/session.controller'
 
 
-const publicPath = path.resolve(__dirname, '../../public/');
+const publicPath = path.resolve(__dirname, '../public/');
 
 const routes = (app: Express): void =>
 {
