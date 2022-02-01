@@ -6,7 +6,7 @@
 
 
 ########## JAVASCRIPT ##########
-node_modules/
+**/node_modules/
 
 # generated js files
 build/
