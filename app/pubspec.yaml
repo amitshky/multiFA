@@ -16,7 +16,9 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   crypto: ^3.0.1
   base32: ^2.1.1
-
+  #local_auth: ^1.1.10
+  local_auth: ^1.1.0
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

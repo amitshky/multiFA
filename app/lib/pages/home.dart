@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'totp.dart';
 import 'scan_qr.dart';
+import 'fingerprint.dart';
 
 class HomePage extends StatefulWidget 
 {
@@ -24,6 +25,8 @@ class _HomePageState extends State<HomePage>
 					mainAxisAlignment: MainAxisAlignment.start,
 					children: const <Widget>[
 						TotpPage(),
+						SizedBox(height: 50),
+						FingerprintPage(),
 					],
 				),
 			),
