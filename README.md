@@ -29,6 +29,8 @@ These should be globally installed:
 	```
 	cd server
 	npm install
+	cd ../app
+	flutter pub get
 	```
 ### Build
 #### Server-side code
