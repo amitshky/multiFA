@@ -65,16 +65,16 @@ flutter run
 
 ## Output
 ### User Registration
-* Open `localhost:5000/register`\
+* Open `localhost:5000/register`
 <img src="img/register.png" width=450>
 * The user details will also be added to the database.
 
 ### Login
-* Open `localhost:5000/login`\
+* Open `localhost:5000/login`
 <img src="img/login.png" width=450>
 
 ### TOTP verification
-* After login:\
+* After login:
 <img src="img/totp.png" width=450>
 
 ### Android Application
