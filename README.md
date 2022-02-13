@@ -32,6 +32,10 @@ These should be globally installed:
 	cd ../app
 	flutter pub get
 	```
+	OR (for windows),
+	```
+	./install.bat
+	```
 ### Build
 #### Server-side code
 (Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
@@ -39,6 +43,10 @@ These should be globally installed:
 	```
 	cd server
 	npm run server
+	```
+	OR (for windows),
+	```
+	./server.bat
 	```
 * You can then open `http://localhost:5000`.
 
@@ -49,35 +57,69 @@ OR,
 	npm run build
 	npm run server-js
 	```
+	OR (for windows),
+	```
+	./server-build.bat
+	```
 * You can then open `http://localhost:5000`.
 
 #### Android Application
+> Warning! In .pub-cache\hosted\pub.dartlang.org\flutter_barcode_scanner-2.0.0\android\src\main\java\com\amolg\flutterbarcodescanner\FlutterBarcodeScannerPlugin.java replace all references of FlutterActivity to FlutterFragmentActivity. This is because the local_auth package uses FlutterFragmentActivity and flutter_barcode_scanner uses FlutterActivity.
+
 * Create and open an [Android Virtual Device (AVD)](https://developer.android.com/studio/run/managing-avds) in Android Studio.
 
 * OR, you can also configure [USB Debugging](https://developer.android.com/studio/debug/dev-options).
 
 (Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
 * Build and run the project using the following command:
-```
-cd app
-flutter run
-```
+	```
+	cd app
+	flutter run
+	```
+	OR (for windows),
+	```
+	./app.bat
+	```
 * OR, use vscode [flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) extension.
+
+* Build and run app in release mode
+	```
+	cd app
+	flutter run --release
+	```
+	OR (for windows),
+	```
+	./app-rel.bat
+	```
 
 
 ## Output
 ### User Registration
 * Open `localhost:5000/register`
+
 <img src="img/register.png" width=450>
+
 * The user details will also be added to the database.
 
 ### Login
 * Open `localhost:5000/login`
+
 <img src="img/login.png" width=450>
 
 ### TOTP verification
 * After login:
+
 <img src="img/totp.png" width=450>
 
 ### Android Application
+* Home page
+
 <img src="img/app.png" width=450>
+
+* Fingerprint verification
+
+<img src="img/appFingerprint.png" width=450>
+
+* QR code scan page
+
+<img src="img/appQrscan.png" width=450>
