@@ -1,5 +1,5 @@
 # multiFA
-Multi-factor Authentication.
+Multi-factor Authentication. The server-side code for this project has been hosted [here](https://multifa.herokuapp.com/).
 
 ## Getting Started
 ### Prerequisites
@@ -15,9 +15,12 @@ These should be globally installed:
 * [ts-node](https://www.npmjs.com/package/ts-node) `npm install -g ts-node`
 
 ### Installation
-* Create a file called `.env` in the root directory of this project and copy the contents below. Generate public and private keys using [RSA key generator](https://travistidwell.com/jsencrypt/demo/) and also create a MongoDB cluster using [MongoDB Atlas](https://www.mongodb.com/atlas), replace them to their respective places. The contents of the `.env` file:
+* Create a file called `.env` in the `server` folder and copy the contents below. Generate public and private keys using [RSA key generator](https://travistidwell.com/jsencrypt/demo/) and also create a MongoDB cluster using [MongoDB Atlas](https://www.mongodb.com/atlas), replace them to their respective places. The contents of the `.env` file:
 	```
 	DB_URI = '<ENTER_YOUR_MONGODB_URI_HERE>'
+
+	PORT = 5000
+	HOST = 'localhost'
 
 	PRIVATE_KEY = '<ENTER_YOUR_PRIVATE_KEY_HERE>'
 
@@ -29,6 +32,12 @@ These should be globally installed:
 	```
 	cd server
 	npm install
+	cd ../app
+	flutter pub get
+	```
+	OR (for windows),
+	```
+	./install.bat
 	```
 ### Build
 #### Server-side code
@@ -37,6 +46,10 @@ These should be globally installed:
 	```
 	cd server
 	npm run server
+	```
+	OR (for windows),
+	```
+	./server.bat
 	```
 * You can then open `http://localhost:5000`.
 
@@ -47,35 +60,66 @@ OR,
 	npm run build
 	npm run server-js
 	```
+	OR (for windows),
+	```
+	./server-build.bat
+	```
 * You can then open `http://localhost:5000`.
 
 #### Android Application
+> Warning! In .pub-cache\hosted\pub.dartlang.org\flutter_barcode_scanner-2.0.0\android\src\main\java\com\amolg\flutterbarcodescanner\FlutterBarcodeScannerPlugin.java replace all references of FlutterActivity to FlutterFragmentActivity. This is because the local_auth package uses FlutterFragmentActivity and flutter_barcode_scanner uses FlutterActivity.
+
 * Create and open an [Android Virtual Device (AVD)](https://developer.android.com/studio/run/managing-avds) in Android Studio.
 
 * OR, you can also configure [USB Debugging](https://developer.android.com/studio/debug/dev-options).
 
 (Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
 * Build and run the project using the following command:
-```
-cd app
-flutter run
-```
+	```
+	cd app
+	flutter run
+	```
+	OR (for windows),
+	```
+	./app.bat
+	```
 * OR, use vscode [flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) extension.
+
+* Build and run app in release mode
+	```
+	cd app
+	flutter run --release
+	```
+	OR (for windows),
+	```
+	./app-rel.bat
+	```
 
 
 ## Output
+* **Website:** https://multifa.herokuapp.com/
+* **Android App:** https://github.com/amitshky/multiFA/releases
+
 ### User Registration
 * Open `localhost:5000/register`\
-![](img/register.png)
+	<img src="img/register.png" width=450>
+
 * The user details will also be added to the database.
 
 ### Login
 * Open `localhost:5000/login`\
-![](img/login.png)
+	<img src="img/login.png" width=450>
 
 ### TOTP verification
 * After login:\
-![](img/totp.png)
+	<img src="img/totp.png" width=450>
 
 ### Android Application
-![](img/app.png)
+* Home page\
+	<img src="img/app.png" width=300>
+
+* Fingerprint verification\
+	<img src="img/appFingerprint.png" width=300>
+
+* QR code scan page\
+	<img src="img/appQrscan.png" width=300>

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
-import 'package:app/style.dart';
+import 'totp.dart';
+import 'scan_qr.dart';
+import 'fingerprint.dart';
 
 class HomePage extends StatefulWidget 
 {
@@ -20,20 +22,15 @@ class _HomePageState extends State<HomePage>
 			appBar: AppBar(title: Text(widget.title), centerTitle: true, elevation: 0),
 			body: Center(
 				child: Column(
-					mainAxisAlignment: MainAxisAlignment.center,
-					children: <Widget>[
-						Text('XXX XXX', style: Theme.of(context).textTheme.headline2),
+					mainAxisAlignment: MainAxisAlignment.start,
+					children: const <Widget>[
+						TotpPage(),
+						SizedBox(height: 50),
+						FingerprintPage(),
 					],
 				),
 			),
-			floatingActionButton: FloatingActionButton(
-				onPressed: () {},
-				tooltip  : 'Scan QR code',
-				child    : const Icon(Icons.add),
-				backgroundColor: buttonColor,
-				foregroundColor: appColor,
-				elevation: 0,
-			),
+			floatingActionButton: const ScanQRPage(), // Currently the QR code scanner doesnt do anything
 		);
 	}
 }
