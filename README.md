@@ -97,8 +97,8 @@ OR,
 
 
 ## Output
-* https://multifa.herokuapp.com/
-* *insert app release here*
+* **Website:** https://multifa.herokuapp.com/
+* **Android App:** https://github.com/amitshky/multiFA/releases
 
 ### User Registration
 * Open `localhost:5000/register`\
