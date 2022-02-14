@@ -1,5 +1,5 @@
 # multiFA
-Multi-factor Authentication.
+Multi-factor Authentication. The server-side code for this project has been hosted [here](https://multifa.herokuapp.com/).
 
 ## Getting Started
 ### Prerequisites
@@ -18,6 +18,9 @@ These should be globally installed:
 * Create a file called `.env` in the `server` folder and copy the contents below. Generate public and private keys using [RSA key generator](https://travistidwell.com/jsencrypt/demo/) and also create a MongoDB cluster using [MongoDB Atlas](https://www.mongodb.com/atlas), replace them to their respective places. The contents of the `.env` file:
 	```
 	DB_URI = '<ENTER_YOUR_MONGODB_URI_HERE>'
+
+	PORT = 5000
+	HOST = 'localhost'
 
 	PRIVATE_KEY = '<ENTER_YOUR_PRIVATE_KEY_HERE>'
 
@@ -94,32 +97,29 @@ OR,
 
 
 ## Output
-### User Registration
-* Open `localhost:5000/register`
+* https://multifa.herokuapp.com/
+* *insert app release here*
 
-<img src="img/register.png" width=450>
+### User Registration
+* Open `localhost:5000/register`\
+	<img src="img/register.png" width=450>
 
 * The user details will also be added to the database.
 
 ### Login
-* Open `localhost:5000/login`
-
-<img src="img/login.png" width=450>
+* Open `localhost:5000/login`\
+	<img src="img/login.png" width=450>
 
 ### TOTP verification
-* After login:
-
-<img src="img/totp.png" width=450>
+* After login:\
+	<img src="img/totp.png" width=450>
 
 ### Android Application
-* Home page
+* Home page\
+	<img src="img/app.png" width=300>
 
-<img src="img/app.png" width=450>
+* Fingerprint verification\
+	<img src="img/appFingerprint.png" width=300>
 
-* Fingerprint verification
-
-<img src="img/appFingerprint.png" width=450>
-
-* QR code scan page
-
-<img src="img/appQrscan.png" width=450>
+* QR code scan page\
+	<img src="img/appQrscan.png" width=300>

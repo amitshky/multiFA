@@ -19,7 +19,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(deserializeUser);
 
-app.listen(PORT, HOST, (): void => 
+app.listen(PORT, (): void => 
 {
 	logger.info(`Listening on http://${HOST}:${PORT}`);
 	connect();

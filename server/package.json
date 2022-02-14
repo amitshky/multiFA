@@ -2,8 +2,9 @@
   "name": "multifa",
   "version": "1.0.0",
   "description": "Multi-factor Authentication",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node build/src/app.js",
     "build": "tsc -p . && copyfiles -u 1 public/**/*.html public/**/*.css build/public/",
     "server-js": "node build/src/app.js",
     "server": "nodemon src/app.ts"
@@ -34,7 +35,8 @@
     "pino-pretty": "^7.3.0",
     "qrcode": "^1.5.0",
     "speakeasy": "^2.0.0",
-    "yup": "^0.32.11"
+    "yup": "^0.32.11",
+    "ts-node": "^10.4.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -50,7 +52,6 @@
     "@types/yup": "^0.29.13",
     "copyfiles": "^2.4.1",
     "nodemon": "^2.0.15",
-    "ts-node": "^10.4.0",
     "typescript": "^4.5.4"
   }
 }
