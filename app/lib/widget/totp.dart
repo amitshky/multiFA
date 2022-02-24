@@ -6,8 +6,8 @@ import 'package:app/style.dart';
 
 class TotpWidget extends StatefulWidget 
 {
-	const TotpWidget({ Key? key, required this.secret }) : super(key: key);
 	final String secret;
+	const TotpWidget({ Key? key, required this.secret }) : super(key: key);
 
 	@override
 	_TotpWidgetState createState() => _TotpWidgetState();
@@ -17,19 +17,18 @@ class _TotpWidgetState extends State<TotpWidget>
 {
 	// TODO: stop timer when not needed and initialize timer and totp and stuff when needed
 	Timer? timer;
-	late String secretStr;
 	late int unixTime;
 	late String totp;
 	late int timeRemaining;
 
-	_TotpWidgetState()
-		:super()
+	@override
+	void initState() 
 	{
-		secretStr     = widget.secret;
+		super.initState();
 		unixTime      = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-		totp          = TOTP.generateTOTP(secretStr, unixTime);
+		totp          = TOTP.generateTOTP(widget.secret, unixTime);
 		timeRemaining = 30 - (unixTime % 30);
-	}
+  }
 
 	@override
 	Widget build(BuildContext context) 
@@ -41,7 +40,7 @@ class _TotpWidgetState extends State<TotpWidget>
 				unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 				if ((unixTime % 30) == 0)
 				{
-					totp = TOTP.generateTOTP(secretStr, unixTime);
+					totp = TOTP.generateTOTP(widget.secret, unixTime);
 				}
 				timeRemaining = 30 - (unixTime % 30);
 			});
