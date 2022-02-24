@@ -6,8 +6,9 @@ import 'package:app/style.dart';
 
 class TotpWidget extends StatefulWidget 
 {
+	final String email;
 	final String secret;
-	const TotpWidget({ Key? key, required this.secret }) : super(key: key);
+	const TotpWidget({ Key? key, required this.email, required this.secret }) : super(key: key);
 
 	@override
 	_TotpWidgetState createState() => _TotpWidgetState();
@@ -48,7 +49,7 @@ class _TotpWidgetState extends State<TotpWidget>
 
 		return ListTile(
 			title    : Text(totp.substring(0, 3) + ' ' + totp.substring(3), style: Theme.of(context).textTheme.headline2), 
-			subtitle : Text("amit@amit.com", style: Theme.of(context).textTheme.bodyText1,),
+			subtitle : Text(widget.email, style: Theme.of(context).textTheme.bodyText1,),
 			tileColor: appBgColor,
 			leading  : SizedBox(
 				width : 32,

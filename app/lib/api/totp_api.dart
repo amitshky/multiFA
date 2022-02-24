@@ -7,7 +7,7 @@ class TOTP
 	// TODO: make generation async maybe
 
 	// TODO: get secret from a file or something
-	static const String _secretString = 'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA';
+	//static const String _secretString = 'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA';
 	//static final Uint8List _secret = base32.decode(_secretString);
 	//static final Hmac _hmac = Hmac(sha1, _secret);
 
@@ -16,7 +16,7 @@ class TOTP
 		int unixTimestep = (unixTime / 30).floor();
 		List<int> unixTimestepBytes = _intToByteArray(unixTimestep);
 
-		Hmac hmac = Hmac(sha1, base32.decode(_secretString));
+		Hmac hmac = Hmac(sha1, base32.decode(secretStr));
 		List<int> hashBytes = hmac.convert(unixTimestepBytes).bytes;
 
 		int offset = hashBytes[hashBytes.length - 1] & 0xf;
