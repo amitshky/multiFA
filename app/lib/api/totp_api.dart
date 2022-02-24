@@ -8,14 +8,16 @@ class TOTP
 
 	// TODO: get secret from a file or something
 	static const String _secretString = 'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA';
-	static final Uint8List _secret = base32.decode(_secretString);
-	static final Hmac _hmac = Hmac(sha1, _secret);
+	//static final Uint8List _secret = base32.decode(_secretString);
+	//static final Hmac _hmac = Hmac(sha1, _secret);
 
-	static String generateTOTP(int unixTime)
+	static String generateTOTP(String secretStr, int unixTime)
 	{
 		int unixTimestep = (unixTime / 30).floor();
 		List<int> unixTimestepBytes = _intToByteArray(unixTimestep);
-		List<int> hashBytes = _hmac.convert(unixTimestepBytes).bytes;
+
+		Hmac hmac = Hmac(sha1, base32.decode(_secretString));
+		List<int> hashBytes = hmac.convert(unixTimestepBytes).bytes;
 
 		int offset = hashBytes[hashBytes.length - 1] & 0xf;
 		int rHex   = ((hashBytes[offset    ] & 0x7f) << 24) | 
