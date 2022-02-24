@@ -19,13 +19,14 @@ class _ScanQRPageState extends State<ScanQRPage>
 	@override
 	Widget build(BuildContext context)
 	{
-		return FloatingActionButton(
+		return ElevatedButton.icon(
+			icon : const Icon(Icons.add, size: 26, color: appColor),
+			label: Text('Add TOTP', style: Theme.of(context).textTheme.bodyText1),
+			style: ElevatedButton.styleFrom(
+				primary  : buttonColor,
+				elevation: 0,
+			),
 			onPressed: scanQR,
-			tooltip  : 'Scan QR code',
-			child    : const Icon(Icons.add, size: 30),
-			backgroundColor: buttonColor,
-			foregroundColor: appColor,
-			elevation: 0,
 		);
 	}
 

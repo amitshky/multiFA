@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:app/style.dart';
-import 'package:app/pages/home.dart';
+import 'package:app/widget/home.dart';
 
 void main() => runApp(const App());
 
@@ -17,7 +17,7 @@ class App extends StatelessWidget
 			home: const HomePage(title: appTitle),
 			theme: ThemeData(
 				primarySwatch: appBgColor,
-				appBarTheme: const AppBarTheme(titleTextStyle: appBarTextStyle),
+				appBarTheme  : const AppBarTheme(titleTextStyle: appBarTextStyle),
 				scaffoldBackgroundColor: appBgColor,
 				textTheme: const TextTheme(
 					headline1: titleTextStyle,
@@ -25,7 +25,7 @@ class App extends StatelessWidget
 					headline2: telText1Style,
 					bodyText2: telText2Style,
 				)
-			), 
+			),
 		);
 	}
 }

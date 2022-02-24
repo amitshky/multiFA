@@ -49,9 +49,9 @@ const MaterialColor buttonColor = MaterialColor(0xFF2C2C2C, _buttonColor); // li
 
 
 // Fonts
-const double largeTextStyle  = 42.0;
-const double mediumTextStyle = 20.0;
-const double bodyTextStyle   = 14.0;
+const double largeTextSize  = 32.0;
+const double mediumTextSize = 20.0;
+const double bodyTextSize   = 14.0;
 
 const String defaultFont = 'Montserrat';
 const String consolas    = 'Consolas';
@@ -59,34 +59,34 @@ const String consolas    = 'Consolas';
 const appBarTextStyle = TextStyle(
 	fontFamily: defaultFont,
 	fontWeight: FontWeight.w400,
-	fontSize  : mediumTextStyle,
+	fontSize  : mediumTextSize,
 	color     : textColor,
 );
 
 const titleTextStyle = TextStyle(
 	fontFamily: defaultFont,
 	fontWeight: FontWeight.w500,
-	fontSize  : largeTextStyle,
+	fontSize  : largeTextSize,
 	color     : textColor,
 );
 
 const bodyText1Style = TextStyle(
 	fontFamily: defaultFont,
 	fontWeight: FontWeight.w200,
-	fontSize  : bodyTextStyle,
+	fontSize  : bodyTextSize,
 	color     : textColor,
 );
 
 const telText1Style = TextStyle(
 	fontFamily: consolas,
 	fontWeight: FontWeight.w400,
-	fontSize  : largeTextStyle,
+	fontSize  : largeTextSize,
 	color     : textColor,
 );
 
 const telText2Style = TextStyle(
 	fontFamily: consolas,
 	fontWeight: FontWeight.w200,
-	fontSize  : bodyTextStyle,
+	fontSize  : bodyTextSize,
 	color     : textColor,
 );

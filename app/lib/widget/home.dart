@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'totp.dart';
-import 'scan_qr.dart';
+import 'scanqr.dart';
 import 'fingerprint.dart';
 
 class HomePage extends StatefulWidget 
@@ -20,17 +20,22 @@ class _HomePageState extends State<HomePage>
 	{
 		return Scaffold(
 			appBar: AppBar(title: Text(widget.title), centerTitle: true, elevation: 0),
-			body: Center(
+			body  : Center(
 				child: Column(
 					mainAxisAlignment: MainAxisAlignment.start,
 					children: const <Widget>[
-						TotpPage(),
-						SizedBox(height: 50),
-						FingerprintPage(),
+						TotpWidget(),
 					],
 				),
 			),
-			floatingActionButton: const ScanQRPage(), // Currently the QR code scanner doesnt do anything
+			//floatingActionButton: const ScanQRPage(), // Currently the QR code scanner doesnt do anything
+			bottomNavigationBar: Row(
+				mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+				children: const <Widget> [ 
+					FingerprintWidget(), 
+					ScanQRPage()
+				]
+			),
 		);
 	}
 }

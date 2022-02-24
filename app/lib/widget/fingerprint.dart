@@ -4,18 +4,18 @@ import 'package:app/api/local_auth_api.dart';
 import 'package:app/style.dart';
 
 
-class FingerprintPage extends StatelessWidget
+class FingerprintWidget extends StatelessWidget
 {
-	const FingerprintPage({Key? key}) : super(key: key);
+	const FingerprintWidget({Key? key}) : super(key: key);
 
 	@override
 	Widget build(BuildContext context)
 	{
 		return ElevatedButton.icon(
-			icon: const Icon(Icons.fingerprint, size: 26, color: appColor),
+			icon : const Icon(Icons.fingerprint, size: 26, color: appColor),
 			label: Text('Authenticate', style: Theme.of(context).textTheme.bodyText1),
 			style: ElevatedButton.styleFrom(
-				primary: buttonColor,
+				primary  : buttonColor,
 				elevation: 0,
 			),
 			onPressed: () async
