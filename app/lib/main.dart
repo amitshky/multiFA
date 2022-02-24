@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:app/style.dart';
 import 'package:app/widget/home.dart';
 
-void main() => runApp(const App());
+void main()
+{
+	SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+	runApp(const App());
+}
 
 class App extends StatelessWidget
 {
