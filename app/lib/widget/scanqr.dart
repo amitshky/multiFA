@@ -23,7 +23,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 			icon : const Icon(Icons.add, size: 26, color: appColor),
 			label: Text('Add TOTP', style: Theme.of(context).textTheme.bodyText1),
 			style: ElevatedButton.styleFrom(
-				primary  : buttonColor,
+				primary  : appBgColor,
 				elevation: 0,
 			),
 			onPressed: scanQR,

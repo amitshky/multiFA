@@ -11,7 +11,7 @@ class LocalAuthApi
 		{
 			return await _auth.canCheckBiometrics;
 		}
-		on PlatformException catch(e)
+		on PlatformException catch(_)
 		{
 			//print(e);
 			return false;
@@ -32,7 +32,7 @@ class LocalAuthApi
 				stickyAuth     : true, // keep authentication dialog 
 			);
 		}
-		on PlatformException catch(e)
+		on PlatformException catch(_)
 		{
 			//print(e);
 			return false;

@@ -25,9 +25,10 @@ class App extends StatelessWidget
 				appBarTheme  : const AppBarTheme(titleTextStyle: appBarTextStyle),
 				scaffoldBackgroundColor: appBgColor,
 				textTheme: const TextTheme(
-					headline1: titleTextStyle,
-					bodyText1: bodyText1Style,
+					headline1: title1TextStyle,
 					headline2: telText1Style,
+					headline3: title2TextStyle,
+					bodyText1: bodyText1Style,
 					bodyText2: telText2Style,
 				)
 			),

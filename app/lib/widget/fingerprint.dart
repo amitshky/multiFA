@@ -15,7 +15,7 @@ class FingerprintWidget extends StatelessWidget
 			icon : const Icon(Icons.fingerprint, size: 26, color: appColor),
 			label: Text('Authenticate', style: Theme.of(context).textTheme.bodyText1),
 			style: ElevatedButton.styleFrom(
-				primary  : buttonColor,
+				primary  : appBgColor,
 				elevation: 0,
 			),
 			onPressed: () async

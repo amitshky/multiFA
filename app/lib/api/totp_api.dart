@@ -1,15 +1,9 @@
-import 'dart:typed_data';
 import 'package:crypto/crypto.dart';
 import 'package:base32/base32.dart';
 
 class TOTP
 {
 	// TODO: make generation async maybe
-
-	// TODO: get secret from a file or something
-	//static const String _secretString = 'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA';
-	//static final Uint8List _secret = base32.decode(_secretString);
-	//static final Hmac _hmac = Hmac(sha1, _secret);
 
 	static String generateTOTP(String secretStr, int unixTime)
 	{
