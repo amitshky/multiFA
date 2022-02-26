@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 import 'package:app/style.dart';
@@ -38,7 +39,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 		}
 		catch(e)
 		{
-			// TODO: put some actual exception handling here, like a popup or toast msg or something
+			Fluttertoast.showToast(msg: 'Scan unsuccessful.');
 		}
 	}
 }

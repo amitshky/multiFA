@@ -28,21 +28,4 @@ class FingerprintWidget extends StatelessWidget
 			},
 		);
 	}
-
-	// TODO: this is just for reference, remove it later
-	//Widget buildText(String text, bool checked)
-	//{
-	//	return Container(
-	//		margin: const EdgeInsets.symmetric(vertical: 8),
-	//		child: Row(
-	//			children: [
-	//				checked
-	//						? const Icon(Icons.check, color: Colors.green, size: 24)
-	//						: const Icon(Icons.close, color: Colors.red, size: 24),
-	//				const SizedBox(width: 12),
-	//				Text(text, style: const TextStyle(fontSize: 24)),
-	//			],
-	//		),
-	//	);
-	//}
 }

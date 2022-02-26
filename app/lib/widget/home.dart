@@ -2,10 +2,12 @@ import 'package:app/style.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
-import 'totp.dart';
-import 'scanqr.dart';
-import 'fingerprint.dart';
+import 'package:app/widget/totp.dart';
+import 'package:app/widget/scanqr.dart';
+import 'package:app/widget/fingerprint.dart';
 import 'package:app/model/userdetails.dart';
+import 'package:app/utils/utils.dart';
+
 
 class HomePage extends StatefulWidget 
 {
@@ -35,28 +37,20 @@ class _HomePageState extends State<HomePage>
 	};
 
 	@override
-	void initState()
-	{
-		super.initState();
-		for (int i = 0; i < userDetailsList.length; ++i)
-		{
-			totpTiles.add(TotpWidget(
-				key        : UniqueKey(), 
-				userDetails: userDetailsList[i], 
-				deleteTile : _deleteTile, 
-				index      : i
-			));
-		}
-	}
-
-	@override
 	Widget build(BuildContext context) 
 	{
 		return Scaffold(
 			appBar: AppBar(title: Text(widget.title), centerTitle: true, elevation: 0),
 			body  : ListView.separated(
-				itemCount  : totpTiles.length,
-				itemBuilder: (context, index) => totpTiles[index],
+				itemCount  : userDetailsList.length,
+				itemBuilder: (context, index) 
+				{
+					return TotpWidget(
+						key        : UniqueKey(), 
+						userDetails: userDetailsList[index], 
+						deleteTile : _deleteTile,
+					);
+				},
 				separatorBuilder: (context, index) => const Divider(color: dividerColor, indent: 16.0, endIndent: 16.0),
 			),
 			bottomNavigationBar: Row(
@@ -69,13 +63,13 @@ class _HomePageState extends State<HomePage>
 		);
 	}
 
-	void _deleteTile(int index)
+	void _deleteTile(UserDetails obj)
 	{
 		setState(() 
 		{
-			idSet.remove(userDetailsList[index].secretKey);
-			userDetailsList.removeAt(index);
-			totpTiles.removeAt(index);
+			final idx = userDetailsList.indexOf(obj);
+			idSet.remove(userDetailsList[idx].secretKey);
+			userDetailsList.removeAt(idx);
 		});
 	}
 
@@ -83,20 +77,13 @@ class _HomePageState extends State<HomePage>
 	{
 		setState(() 
 		{
-			final uriDecoded = _otpauthUriDecode(data);
+			final uriDecoded = otpauthUriDecode(data);
 			if (uriDecoded  != null)
 			{
 				final item = UserDetails(email: uriDecoded['email']!, secretKey: uriDecoded['key']!);
 
 				if (idSet.add(item.secretKey))
 				{
-					totpTiles.add(TotpWidget(
-						key: UniqueKey(),
-						userDetails: item, 
-						deleteTile : _deleteTile, 
-						index      : totpTiles.length,
-					));
-
 					userDetailsList.add(item);
 				}
 				else
@@ -104,18 +91,10 @@ class _HomePageState extends State<HomePage>
 					Fluttertoast.showToast(msg: 'This TOTP already exists.');
 				}
 			}
+			else
+			{
+				Fluttertoast.showToast(msg: 'Unrecognized OTPAuth URI.');
+			}
 		});
-	}
-
-	Map<String, String>? _otpauthUriDecode(String uri)
-	{
-		if (uri.indexOf('otpauth://totp/') == 0) // check if the uri is in the correct format
-		{
-			final String key   = uri.substring(uri.indexOf('=') + 1);
-			final String email = uri.substring(uri.indexOf('totp/') + 5, uri.indexOf('?'));
-			return { 'email': email, 'key': key };
-		}
-		
-		return null; 
 	}
 }
