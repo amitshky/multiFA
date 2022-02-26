@@ -1,5 +1,6 @@
 import 'package:app/style.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'totp.dart';
 import 'scanqr.dart';
@@ -26,22 +27,26 @@ class _HomePageState extends State<HomePage>
 		UserDetails(email: 'igotnthtolose@gmail.com', secretKey: 'KZHTETTSFRRHK5CJNQZEYQSKNMRUMWDBKI3XWVB4OM4FA4ZQKVSA'), 
 	];
 
+	Set<String> idSet = <String> {
+		'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA',
+		'JI2GYV2SHY2TA6L2LNQTAQSKHJLC4ZJRPJHGI4DLGI3XEZLPK5YQ',
+		'NVDGO3RKF43ES2DHORGUK6C2GBLF4ULENROTIVK3H5FGW5LDJY2A',
+		'KZHTETTSFRRHK5CJNQZEYQSKNMRUMWDBKI3XWVB4OM4FA4ZQKVSA',
+	};
+
 	@override
 	void initState()
 	{
 		super.initState();
-		for (int i = 0; i < userDetailsList.length; i++)
+		for (int i = 0; i < userDetailsList.length; ++i)
 		{
-			final item = userDetailsList[i];
-			totpTiles.add(TotpWidget(key: UniqueKey(), userDetails: item, deleteTile: _deleteTile, index: i));
+			totpTiles.add(TotpWidget(
+				key        : UniqueKey(), 
+				userDetails: userDetailsList[i], 
+				deleteTile : _deleteTile, 
+				index      : i
+			));
 		}
-	}
-
-	@override
-	void dispose()
-	{
-		// code here
-		super.dispose();
 	}
 
 	@override
@@ -68,8 +73,9 @@ class _HomePageState extends State<HomePage>
 	{
 		setState(() 
 		{
-			totpTiles.removeAt(index);
+			idSet.remove(userDetailsList[index].secretKey);
 			userDetailsList.removeAt(index);
+			totpTiles.removeAt(index);
 		});
 	}
 
@@ -77,26 +83,39 @@ class _HomePageState extends State<HomePage>
 	{
 		setState(() 
 		{
-			final obj  = _otpauthUriDecode(data);
-			final item = UserDetails(email: obj['email']!, secretKey: obj['key']!);
+			final uriDecoded = _otpauthUriDecode(data);
+			if (uriDecoded  != null)
+			{
+				final item = UserDetails(email: uriDecoded['email']!, secretKey: uriDecoded['key']!);
 
-			final totpItem = TotpWidget(
-				key: UniqueKey(),
-				userDetails: item, 
-				deleteTile : _deleteTile, 
-				index      : totpTiles.length
-			);
+				if (idSet.add(item.secretKey))
+				{
+					totpTiles.add(TotpWidget(
+						key: UniqueKey(),
+						userDetails: item, 
+						deleteTile : _deleteTile, 
+						index      : totpTiles.length,
+					));
 
-			totpTiles.add(totpItem);
-			userDetailsList.add(item);
+					userDetailsList.add(item);
+				}
+				else
+				{
+					Fluttertoast.showToast(msg: 'This TOTP already exists.');
+				}
+			}
 		});
 	}
 
-	Map<String, String> _otpauthUriDecode(String uri)
+	Map<String, String>? _otpauthUriDecode(String uri)
 	{
-		// TODO: check if the data is in the right format
-		final String key   = uri.substring(uri.indexOf('=') + 1);
-		final String email = uri.substring(uri.indexOf('totp/') + 5, uri.indexOf('?'));
-		return { 'email': email, 'key': key };
+		if (uri.indexOf('otpauth://totp/') == 0) // check if the uri is in the correct format
+		{
+			final String key   = uri.substring(uri.indexOf('=') + 1);
+			final String email = uri.substring(uri.indexOf('totp/') + 5, uri.indexOf('?'));
+			return { 'email': email, 'key': key };
+		}
+		
+		return null; 
 	}
 }

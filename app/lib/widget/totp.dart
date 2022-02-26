@@ -44,25 +44,23 @@ class _TotpWidgetState extends State<TotpWidget>
 	@override
 	Widget build(BuildContext context) 
 	{
-		timer = Timer.periodic(const Duration(seconds: 1), (_)
+		if (mounted)
 		{
-			if (mounted)
+			timer = Timer.periodic(const Duration(seconds: 1), (_)
 			{
 				setState(()
 				{
 					unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-					if ((unixTime % 30) == 0)
-					{
-						totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
-					}
+					
+					if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
+					
 					timeRemaining = 30 - (unixTime % 30);
 				});
-			}
-			
-		});
+			});
+		}
 
 		return ListTile(
-			//key      : widget.key,
+			key      : UniqueKey(),
 			title    : Text(totp.substring(0, 3) + ' ' + totp.substring(3), style: Theme.of(context).textTheme.headline2), 
 			subtitle : Text(widget.userDetails.email, style: Theme.of(context).textTheme.bodyText1),
 			tileColor: appBgColor,
@@ -83,9 +81,9 @@ class _TotpWidgetState extends State<TotpWidget>
 				),
 			),
 			trailing: IconButton(
-				icon: const Icon(Icons.delete_outline, color: appColor),
-				color: buttonColor,
-				onPressed: () => _delete(context),
+				icon     : const Icon(Icons.delete_outline, color: appColor),
+				color    : buttonColor,
+				onPressed: () => _delete(context)
 			),
 		);
 	}
@@ -102,7 +100,6 @@ class _TotpWidgetState extends State<TotpWidget>
 			builder: (BuildContext ctx) 
 			{
 				return AlertDialog(
-					key    : widget.key,
 					title  : Text('Please Confirm', style: Theme.of(context).textTheme.headline3),
 					content: Text('Are you sure you want to remove this TOTP?', style: Theme.of(context).textTheme.bodyText1),
 					backgroundColor: buttonColor,
@@ -112,9 +109,9 @@ class _TotpWidgetState extends State<TotpWidget>
 							onPressed: ()
 							{
 								Navigator.of(context).pop(); // Close the dialog
-								widget.deleteTile(widget.index);
 								_stopTimer();
 								if (mounted) setState(() {});
+								widget.deleteTile(widget.index);
 							},
 						),
 						TextButton( // "No" button
