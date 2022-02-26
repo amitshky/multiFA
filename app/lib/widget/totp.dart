@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/api/totp_api.dart';
 import 'package:app/style.dart';
-import 'package:app/data/userdetails.dart';
+import 'package:app/model/userdetails.dart';
 
 class TotpWidget extends StatefulWidget 
 {
@@ -37,7 +37,7 @@ class _TotpWidgetState extends State<TotpWidget>
 	@override
 	void dispose()
 	{
-		stopTimer();
+		_stopTimer();
 		super.dispose();
 	}
 
@@ -46,15 +46,19 @@ class _TotpWidgetState extends State<TotpWidget>
 	{
 		timer = Timer.periodic(const Duration(seconds: 1), (_)
 		{
-			setState(()
+			if (mounted)
 			{
-				unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-				if ((unixTime % 30) == 0)
+				setState(()
 				{
-					totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
-				}
-				timeRemaining = 30 - (unixTime % 30);
-			});
+					unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+					if ((unixTime % 30) == 0)
+					{
+						totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
+					}
+					timeRemaining = 30 - (unixTime % 30);
+				});
+			}
+			
 		});
 
 		return ListTile(
@@ -86,9 +90,9 @@ class _TotpWidgetState extends State<TotpWidget>
 		);
 	}
 	
-	void stopTimer()
+	void _stopTimer()
 	{
-		setState(() => timer?.cancel());
+		if (mounted) setState(() => timer?.cancel());
 	}
 
 	void _delete(BuildContext context) 
@@ -98,7 +102,7 @@ class _TotpWidgetState extends State<TotpWidget>
 			builder: (BuildContext ctx) 
 			{
 				return AlertDialog(
-					key    : UniqueKey(),
+					key    : widget.key,
 					title  : Text('Please Confirm', style: Theme.of(context).textTheme.headline3),
 					content: Text('Are you sure you want to remove this TOTP?', style: Theme.of(context).textTheme.bodyText1),
 					backgroundColor: buttonColor,
@@ -109,6 +113,8 @@ class _TotpWidgetState extends State<TotpWidget>
 							{
 								Navigator.of(context).pop(); // Close the dialog
 								widget.deleteTile(widget.index);
+								_stopTimer();
+								if (mounted) setState(() {});
 							},
 						),
 						TextButton( // "No" button

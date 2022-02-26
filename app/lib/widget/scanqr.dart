@@ -6,7 +6,8 @@ import 'package:app/style.dart';
 
 class ScanQRPage extends StatefulWidget 
 {
-	const ScanQRPage({Key? key}) : super(key: key);
+	final void Function(String) getQRData;
+	const ScanQRPage({ Key? key, required this.getQRData }) : super(key: key);
 
 	@override
 	_ScanQRPageState createState() => _ScanQRPageState();
@@ -14,8 +15,6 @@ class ScanQRPage extends StatefulWidget
 
 class _ScanQRPageState extends State<ScanQRPage>
 {
-	String qrData = 'N/A';
-
 	@override
 	Widget build(BuildContext context)
 	{
@@ -26,20 +25,20 @@ class _ScanQRPageState extends State<ScanQRPage>
 				primary  : appBgColor,
 				elevation: 0,
 			),
-			onPressed: scanQR,
+			onPressed: _scanQR,
 		);
 	}
 
-	Future<void> scanQR() async
+	Future<void> _scanQR() async
 	{
 		try
 		{
 			FlutterBarcodeScanner.scanBarcode(appColorHex, 'Cancel', true, ScanMode.QR)
-				.then((value) => qrData = value); // TODO: maybe store `qrData` in a file
+				.then((value) => setState(() => widget.getQRData(value)));
 		}
 		catch(e)
 		{
-			qrData = 'Unable to scan the QR code.'; // TODO: put some actual exception handling here, like a popup or something
+			// TODO: put some actual exception handling here, like a popup or toast msg or something
 		}
 	}
 }
