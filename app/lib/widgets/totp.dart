@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:app/style.dart';
 import 'package:app/api/totp_api.dart';
 import 'package:app/models/userdetails.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class TotpWidget extends StatefulWidget 
@@ -19,7 +20,6 @@ class TotpWidget extends StatefulWidget
 
 class _TotpWidgetState extends State<TotpWidget> 
 {
-	// TODO: stop timer when not needed and initialize timer and totp and stuff when needed
 	Timer? timer;
 	late int unixTime;
 	late String totp;
@@ -32,18 +32,7 @@ class _TotpWidgetState extends State<TotpWidget>
 		unixTime      = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 		totp          = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 		timeRemaining = 30 - (unixTime % 30);
-	}
 
-	@override
-	void dispose()
-	{
-		_stopTimer();
-		super.dispose();
-	}
-
-	@override
-	Widget build(BuildContext context) 
-	{
 		if (mounted)
 		{
 			timer = Timer.periodic(const Duration(seconds: 1), (_)
@@ -58,7 +47,18 @@ class _TotpWidgetState extends State<TotpWidget>
 				});
 			});
 		}
+	}
 
+	@override
+	void dispose()
+	{
+		_stopTimer();
+		super.dispose();
+	}
+
+	@override
+	Widget build(BuildContext context) 
+	{
 		return ListTile(
 			key      : widget.key,
 			title    : Text(totp.substring(0, 3) + ' ' + totp.substring(3), style: Theme.of(context).textTheme.headline2), 
@@ -90,7 +90,14 @@ class _TotpWidgetState extends State<TotpWidget>
 	
 	void _stopTimer()
 	{
-		if (mounted) setState(() => timer?.cancel());
+		try
+		{
+			if (mounted) setState(() => timer?.cancel());
+		}
+		catch(_) 
+		{
+			// no proper response for this exception; seems to be only a debug thing
+		}
 	}
 
 	void _delete(BuildContext context) 
@@ -110,7 +117,8 @@ class _TotpWidgetState extends State<TotpWidget>
 							onPressed: ()
 							{
 								Navigator.of(context).pop(); // Close the dialog
-								setState(() => widget.deleteTile(widget.userDetails));
+								Fluttertoast.showToast(msg: 'TOTP removed.', backgroundColor: buttonColor);
+								widget.deleteTile(widget.userDetails);
 							},
 						),
 						TextButton( // "No" button

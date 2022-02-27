@@ -21,21 +21,8 @@ class HomeScreen extends StatefulWidget
 
 class _HomeScreenState extends State<HomeScreen>
 {
-	List<TotpWidget> totpTiles = <TotpWidget>[];
-
-	List<UserDetails> userDetailsList = <UserDetails>[
-		//UserDetails(email: 'amit@amit.com',           secretKey: 'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA'), 
-		//UserDetails(email: 'heroku@heroku.com',       secretKey: 'JI2GYV2SHY2TA6L2LNQTAQSKHJLC4ZJRPJHGI4DLGI3XEZLPK5YQ'), 
-		//UserDetails(email: 'kushal@shrestha.com',     secretKey: 'NVDGO3RKF43ES2DHORGUK6C2GBLF4ULENROTIVK3H5FGW5LDJY2A'), 
-		//UserDetails(email: 'igotnthtolose@gmail.com', secretKey: 'KZHTETTSFRRHK5CJNQZEYQSKNMRUMWDBKI3XWVB4OM4FA4ZQKVSA'), 
-	];
-
-	Set<String> idSet = <String>{
-		//'MEWHQLCVJN2DWQTUNBFD47LTG4WDMP2PHF5DK23UENXDGNSKOQYA',
-		//'JI2GYV2SHY2TA6L2LNQTAQSKHJLC4ZJRPJHGI4DLGI3XEZLPK5YQ',
-		//'NVDGO3RKF43ES2DHORGUK6C2GBLF4ULENROTIVK3H5FGW5LDJY2A',
-		//'KZHTETTSFRRHK5CJNQZEYQSKNMRUMWDBKI3XWVB4OM4FA4ZQKVSA',
-	};
+	final Set<String> _idSet = <String>{};
+	List<UserDetails> _userDetailsList = <UserDetails>[];
 
 	@override
 	void initState()
@@ -47,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen>
 	@override
 	void dispose()
 	{
-		_storeData(); // locally store user details (email and secret key)
+		_saveData(); // locally store user details (email and secret key)
 		super.dispose();
 	}
 
@@ -57,12 +44,12 @@ class _HomeScreenState extends State<HomeScreen>
 		return Scaffold(
 			appBar: AppBar(title: Text(widget.title), centerTitle: true, elevation: 0),
 			body  : ListView.separated(
-				itemCount  : userDetailsList.length,
+				itemCount  : _userDetailsList.length,
 				itemBuilder: (context, index) 
 				{
 					return TotpWidget(
 						key        : UniqueKey(), 
-						userDetails: userDetailsList[index], 
+						userDetails: _userDetailsList[index], 
 						deleteTile : _deleteTile,
 					);
 				},
@@ -80,61 +67,55 @@ class _HomeScreenState extends State<HomeScreen>
 
 	void _deleteTile(UserDetails obj)
 	{
-		setState(() 
-		{
-			final idx = userDetailsList.indexOf(obj);
-			idSet.remove(userDetailsList[idx].secretKey);
-			userDetailsList.removeAt(idx);
-			_storeData(); // locally store user details (email and secret key)
-		});
+		final idx = _userDetailsList.indexOf(obj);
+		_idSet.remove(_userDetailsList[idx].secretKey);
+		setState(() => _userDetailsList.removeAt(idx));
+		_saveData(); // locally store user details (email and secret key)
 	}
 
 	void _getQRData(String data) // data is an otpauth uri
 	{
-		setState(() 
+		final uriDecoded = otpauthUriDecode(data);
+		if (uriDecoded  != null)
 		{
-			final uriDecoded = otpauthUriDecode(data);
-			if (uriDecoded  != null)
-			{
-				final item = UserDetails(email: uriDecoded['email']!, secretKey: uriDecoded['secretKey']!);
+			final item = UserDetails(email: uriDecoded['email']!, secretKey: uriDecoded['secretKey']!);
 
-				if (idSet.add(item.secretKey))
-				{
-					userDetailsList.add(item);
-				_storeData(); // locally store user details (email and secret key)
-				}
-				else
-				{
-					Fluttertoast.showToast(msg: 'This TOTP already exists.', backgroundColor: buttonColor);
-				}
+			if (_idSet.add(item.secretKey))
+			{
+				setState(() => _userDetailsList.add(item));
+				_saveData(); // locally store user details (email and secret key)
 			}
 			else
 			{
-				Fluttertoast.showToast(msg: 'Unrecognized OTPAuth URI.', backgroundColor: buttonColor);
+				Fluttertoast.showToast(msg: 'This TOTP already exists.', backgroundColor: buttonColor);
 			}
-		});
+		}
+		else
+		{
+			Fluttertoast.showToast(msg: 'Unrecognized OTPAuth URI.', backgroundColor: buttonColor);
+		}
 	}
 
 	Future<void> _loadData() async
 	{
 		await UserSecureStorage.load() // load user details (email and secret key) from local storage
-			.then((value) => userDetailsList = value ?? <UserDetails>[])
+			.then((value) => _userDetailsList = value ?? <UserDetails>[])
 			.whenComplete(()
 			{
-				for (int i = 0; i < userDetailsList.length; ++i)
+				for (int i = 0; i < _userDetailsList.length; ++i)
 				{
-					if (!idSet.add(userDetailsList[i].secretKey))
+					if (!_idSet.add(_userDetailsList[i].secretKey))
 					{
-						userDetailsList.removeAt(i); // remove if duplicate
+						_userDetailsList.removeAt(i); // remove if duplicate
 					}
 				}
 			});
 		setState(() {}); // screen not updating after initState() without this
 	}
 
-	Future<void> _storeData() async
+	Future<void> _saveData() async
 	{
-		UserSecureStorage.save(userDetailsList); // locally store user details (email and secret key)
-		setState(() {}); // just to make sure the state is updated // probably not needed
+		UserSecureStorage.save(_userDetailsList); // locally store user details (email and secret key)
+		setState(() {}); // just to make sure the state is updated ; probably not needed
 	}
 }
