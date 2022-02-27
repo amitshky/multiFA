@@ -6,7 +6,7 @@ import 'package:app/widget/totp.dart';
 import 'package:app/widget/scanqr.dart';
 import 'package:app/widget/fingerprint.dart';
 import 'package:app/model/userdetails.dart';
-import 'package:app/utils/utils.dart';
+import 'package:app/util/utils.dart';
 
 
 class HomePage extends StatefulWidget 
@@ -88,12 +88,12 @@ class _HomePageState extends State<HomePage>
 				}
 				else
 				{
-					Fluttertoast.showToast(msg: 'This TOTP already exists.');
+					Fluttertoast.showToast(msg: 'This TOTP already exists.', backgroundColor: buttonColor);
 				}
 			}
 			else
 			{
-				Fluttertoast.showToast(msg: 'Unrecognized OTPAuth URI.');
+				Fluttertoast.showToast(msg: 'Unrecognized OTPAuth URI.', backgroundColor: buttonColor);
 			}
 		});
 	}

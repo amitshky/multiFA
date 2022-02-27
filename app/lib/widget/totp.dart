@@ -101,12 +101,12 @@ class _TotpWidgetState extends State<TotpWidget>
 			{
 				return AlertDialog(
 					key    : widget.key,
-					title  : Text('Please Confirm', style: Theme.of(context).textTheme.headline3),
-					content: Text('Are you sure you want to remove this TOTP?', style: Theme.of(context).textTheme.bodyText1),
+					title  : const Text('Please Confirm', style: TextStyle(color: textColor)),
+					content: const Text('Are you sure you want to remove this TOTP?', style: TextStyle(color: textColor)),
 					backgroundColor: buttonColor,
 					actions: <Widget> [
 						TextButton( // "Yes" button
-							child    : Text('Yes', style: Theme.of(context).textTheme.bodyText1),
+							child    : const Text('Yes', style: TextStyle(color: textColor)),
 							onPressed: ()
 							{
 								Navigator.of(context).pop(); // Close the dialog
@@ -114,7 +114,7 @@ class _TotpWidgetState extends State<TotpWidget>
 							},
 						),
 						TextButton( // "No" button
-							child    : Text('No', style: Theme.of(context).textTheme.bodyText1),
+							child    : const Text('No', style: TextStyle(color: appColor)),
 							onPressed: () => Navigator.of(context).pop(), // Close the dialog
 						),
 					],

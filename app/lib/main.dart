@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:app/style.dart';
-import 'package:app/widget/home.dart';
+import 'package:app/screen/home.dart';
 
 void main()
 {

@@ -39,7 +39,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 		}
 		catch(e)
 		{
-			Fluttertoast.showToast(msg: 'Scan unsuccessful.');
+			Fluttertoast.showToast(msg: 'Scan unsuccessful.', backgroundColor: buttonColor);
 		}
 	}
 }
