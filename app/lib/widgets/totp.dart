@@ -97,6 +97,7 @@ class _TotpWidgetState extends State<TotpWidget>
 		catch(_) 
 		{
 			// no proper response for this exception; seems to be only a debug thing
+			return;
 		}
 	}
 
