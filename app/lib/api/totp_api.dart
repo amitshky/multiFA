@@ -3,8 +3,6 @@ import 'package:base32/base32.dart';
 
 class TOTP
 {
-	// TODO: make generation async maybe
-
 	static String generateTOTP(String secretStr, int unixTime)
 	{
 		int unixTimestep = (unixTime / 30).floor();

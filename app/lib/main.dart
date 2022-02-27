@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:app/style.dart';
-import 'package:app/widget/home.dart';
+import 'package:app/screens/home.dart';
 
 void main()
 {
@@ -19,7 +19,7 @@ class App extends StatelessWidget
 	Widget build(BuildContext context) 
 	{
 		return MaterialApp(
-			home: const HomePage(title: appTitle),
+			home: const HomeScreen(title: appTitle),
 			theme: ThemeData(
 				primarySwatch: appBgColor,
 				appBarTheme  : const AppBarTheme(titleTextStyle: appBarTextStyle),

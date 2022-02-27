@@ -13,7 +13,6 @@ class LocalAuthApi
 		}
 		on PlatformException catch(_)
 		{
-			//print(e);
 			return false;
 		}
 	}
@@ -29,12 +28,11 @@ class LocalAuthApi
 				localizedReason: 'Scan Fingerprint to Authenticate', 
 				biometricOnly  : true,
 				useErrorDialogs: true,
-				stickyAuth     : true, // keep authentication dialog 
+				stickyAuth     : true, // keeps authentication dialog 
 			);
 		}
 		on PlatformException catch(_)
 		{
-			//print(e);
 			return false;
 		}
 	}

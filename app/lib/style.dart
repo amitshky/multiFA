@@ -56,33 +56,30 @@ const double largeTextSize  = 32.0;
 const double mediumTextSize = 20.0;
 const double bodyTextSize   = 14.0;
 
-const String defaultFont = 'Montserrat';
+const String appBarFont  = 'Montserrat';
 const String consolas    = 'Consolas';
 
 const appBarTextStyle = TextStyle(
-	fontFamily: defaultFont,
+	fontFamily: appBarFont,
 	fontWeight: FontWeight.w400,
 	fontSize  : mediumTextSize,
 	color     : textColor,
 );
 
 const title1TextStyle = TextStyle(
-	fontFamily: defaultFont,
 	fontWeight: FontWeight.w500,
 	fontSize  : largeTextSize,
 	color     : textColor,
 );
 
 const title2TextStyle = TextStyle(
-	fontFamily: defaultFont,
-	fontWeight: FontWeight.w400,
+	fontWeight: FontWeight.w500,
 	fontSize  : mediumTextSize,
 	color     : textColor,
 );
 
 const bodyText1Style = TextStyle(
-	fontFamily: defaultFont,
-	fontWeight: FontWeight.w200,
+	fontWeight: FontWeight.w300,
 	fontSize  : bodyTextSize,
 	color     : textColor,
 );
