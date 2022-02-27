@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:app/style.dart';
-import 'package:app/pages/home.dart';
+import 'package:app/screens/home.dart';
 
-void main() => runApp(const App());
+void main()
+{
+	SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(statusBarColor: Colors.transparent));
+	runApp(const App());
+}
 
 class App extends StatelessWidget
 {
@@ -14,18 +19,19 @@ class App extends StatelessWidget
 	Widget build(BuildContext context) 
 	{
 		return MaterialApp(
-			home: const HomePage(title: appTitle),
+			home: const HomeScreen(title: appTitle),
 			theme: ThemeData(
 				primarySwatch: appBgColor,
-				appBarTheme: const AppBarTheme(titleTextStyle: appBarTextStyle),
+				appBarTheme  : const AppBarTheme(titleTextStyle: appBarTextStyle),
 				scaffoldBackgroundColor: appBgColor,
 				textTheme: const TextTheme(
-					headline1: titleTextStyle,
-					bodyText1: bodyText1Style,
+					headline1: title1TextStyle,
 					headline2: telText1Style,
+					headline3: title2TextStyle,
+					bodyText1: bodyText1Style,
 					bodyText2: telText2Style,
 				)
-			), 
+			),
 		);
 	}
 }

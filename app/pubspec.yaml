@@ -17,7 +17,10 @@ dependencies:
   crypto: ^3.0.1
   base32: ^2.1.1
   local_auth: ^1.1.10
-  #local_auth: ^1.1.0
+  fluttertoast: ^8.0.8
+  unique_list: ^1.0.1
+  flutter_secure_storage: ^5.0.2
+
   
 dev_dependencies:
   flutter_test:
@@ -37,10 +40,10 @@ flutter:
       fonts:
         - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
           weight: 400
-        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
-          weight: 200
+    #    - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+    #      weight: 700
+    #    - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+    #      weight: 200
     - family: Consolas
       fonts:
         - asset: assets/fonts/Consolas/CONSOLA.ttf
