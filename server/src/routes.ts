@@ -16,6 +16,8 @@ const publicPath = path.resolve(__dirname, '../public/');
 
 const routes = (app: Express): void =>
 {
+	app.all('*', (req, res) => res.status(404).sendfile(publicPath + '/error.html'));
+
 	app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
 
 	// login page
