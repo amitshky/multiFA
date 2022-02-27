@@ -19,6 +19,8 @@ dependencies:
   local_auth: ^1.1.10
   fluttertoast: ^8.0.8
   unique_list: ^1.0.1
+  flutter_secure_storage: ^5.0.2
+
   
 dev_dependencies:
   flutter_test:

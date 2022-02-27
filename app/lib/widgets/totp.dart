@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:app/style.dart';
 import 'package:app/api/totp_api.dart';
-import 'package:app/model/userdetails.dart';
+import 'package:app/models/userdetails.dart';
 
 
 class TotpWidget extends StatefulWidget 
@@ -104,7 +104,7 @@ class _TotpWidgetState extends State<TotpWidget>
 					title  : const Text('Please Confirm', style: TextStyle(color: textColor)),
 					content: const Text('Are you sure you want to remove this TOTP?', style: TextStyle(color: textColor)),
 					backgroundColor: buttonColor,
-					actions: <Widget> [
+					actions: <Widget>[
 						TextButton( // "Yes" button
 							child    : const Text('Yes', style: TextStyle(color: textColor)),
 							onPressed: ()
