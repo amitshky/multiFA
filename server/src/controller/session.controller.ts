@@ -17,6 +17,7 @@ import logger from '../logger'
 import path from 'path'
 
 const publicPath = path.resolve(__dirname, '../public/');
+
 export const createUserSessionHandler = async (req: Request, res: Response) =>
 {
 	// validate email and password
