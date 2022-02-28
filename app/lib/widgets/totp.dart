@@ -26,27 +26,24 @@ class _TotpWidgetState extends State<TotpWidget>
 	late int timeRemaining;
 
 	@override
-	void initState() 
+	void initState()
 	{
 		super.initState();
 		unixTime      = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 		totp          = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 		timeRemaining = 30 - (unixTime % 30);
 
-		if (mounted)
+		timer = Timer.periodic(const Duration(seconds: 1), (_)
 		{
-			timer = Timer.periodic(const Duration(seconds: 1), (_)
+			setState(()
 			{
-				setState(()
-				{
-					unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+				unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-					if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
+				if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 
-					timeRemaining = 30 - (unixTime % 30);
-				});
+				timeRemaining = 30 - (unixTime % 30);
 			});
-		}
+		});
 	}
 
 	@override

@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:app/models/userdetails.dart';
 
 Map<String, String>? otpauthUriDecode(String uri)
@@ -9,8 +10,8 @@ Map<String, String>? otpauthUriDecode(String uri)
 		final String email     = uri.substring(uri.indexOf('totp/') + 5, uri.indexOf('?'));
 		return { 'email': email, 'secretKey': secretKey };
 	}
-	
-	return null; 
+
+	return null;
 }
 
 String userDetailsListToJson(List<UserDetails> list)
@@ -27,5 +28,5 @@ List<UserDetails> jsonToUserDetailsList(String? jsonData)
 		return userDetailsList;
 	}
 
-	return [];
+	return <UserDetails>[];
 }

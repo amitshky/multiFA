@@ -37,7 +37,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 			FlutterBarcodeScanner.scanBarcode(appColorHex, 'Cancel', true, ScanMode.QR)
 				.then((value) => setState(() => widget.getQRData(value)));
 		}
-		catch(e)
+		catch(_)
 		{
 			Fluttertoast.showToast(msg: 'Scan unsuccessful.', backgroundColor: buttonColor);
 		}
