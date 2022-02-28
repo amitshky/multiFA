@@ -14,8 +14,9 @@ import {
 } from '../service/session.service'
 import { sign, decode } from '../utils/jwt.utils'
 import logger from '../logger'
+import path from 'path'
 
-
+const publicPath = path.resolve(__dirname, '../public/');
 export const createUserSessionHandler = async (req: Request, res: Response) =>
 {
 	// validate email and password
@@ -82,5 +83,5 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		sameSite: 'strict',
 		secure: false,
 	});
-	return res.send({ accessToken, refreshToken });
+	return res.sendFile(publicPath + '/authRequired.html');
 }
