@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt' // hashing password
 import config from 'config' // defaults
 import speakeasy from 'speakeasy' // totp
+import logger from '../logger';
 
 
 export const privateFields = ['password', 'sskey', '__v']; // private fields of the db that you dont want to send as json
@@ -66,9 +67,11 @@ UserSchema.pre('save', async function(next)
 
 UserSchema.methods.generateSSKey = async function (): Promise<string>
 {
-	const user = this as UserDocument;
-	const secret = speakeasy.generateSecret({ name: user.username });
-	user.sskey = secret.base32;
+	const user   = this as UserDocument;
+	const secret = speakeasy.generateSecret({ name: user.email });
+	user.sskey   = secret.base32;
+	logger.info(secret.otpauth_url)
+	logger.info(decodeURIComponent(secret.otpauth_url!));
 	return secret.otpauth_url!;
 }
 

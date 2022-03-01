@@ -13,10 +13,9 @@ import {
 	findSessions 
 } from '../service/session.service'
 import { sign, decode } from '../utils/jwt.utils'
-import logger from '../logger'
-import path from 'path'
 
-const publicPath = path.resolve(__dirname, '../../public/');
+
+const publicPath = config.get('publicPath');
 
 export const createUserSessionHandler = async (req: Request, res: Response) =>
 {

@@ -11,7 +11,7 @@ body{
 
     --samllText: 0.9em;
 
-    margin: 0;
+    margin: 0   ;
     height: 100vh;
     display: flex;
     align-items: center;
@@ -35,6 +35,11 @@ body{
 .form__input,
 .form__button{
     font: 500 1rem "Open Sans", sans-serif;
+}
+
+.form__button-cancel{
+    font: 500 1rem "Open Sans", sans-serif;
+    background-color: var(--color-label);
 }
 
 .form--hidden{
@@ -110,6 +115,7 @@ body{
     outline: none;
     cursor: pointer;
     background: var(--color-primary);
+    margin-bottom: 7px;
 }
 
 .form__button:hover{
@@ -168,30 +174,21 @@ body{
     text-decoration: underline;
 }
 
-.error__message{
-    text-align: center;
-    color: var(--color-error);
-    font-size: 5rem;
-    margin-top: 0.1rem;
-}
-.error__description{
-    text-align: center;
-    color: var(--color-error);
-    font-size: 1.5rem;
-    margin-top: 0rem;
-}
-
-.body__text{
-    text-align: center;
-    color: var(--color-label);
-    font-size: 1.5rem;
-    margin-top: 0rem;
-}
-
 label{
     display: block;
     color: var(--color-label);
     font-size: var(--samllText);
     margin-bottom: 1.0rem;
     text-transform: none;
+}
+
+
+.qr_container{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2.0rem;
+}
+
+img {
+    width: 200px;
 }
