@@ -29,8 +29,8 @@ const qrcodeHtml = (qrData: string) =>
 				<input 
 					class         = "form__input"
 					type          = "text" 
-					name          = "register2fa"
-					id            = "register2fa"
+					name          = "token"
+					id            = "token"
 					placeholder   = "Scan and enter the token"
 					inputmode     = "numeric"
 					pattern       = "[0-9]*" 
