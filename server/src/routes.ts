@@ -30,8 +30,14 @@ const routes = (app: Express): void =>
 	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
 	// 2fa registration
 	app.get('/reg-2fa', register2faHandler);
+
+	// profile page
+	app.get('/profile', (req: Request, res: Response) => res.sendFile(publicPath + '/placeholder.html')); // TODO: add requires user middleware
+
 	// register user // create user
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
+	// verify 2fa registration
+	app.post('/api/users/reg-2fa', twoFASessionHandler);
 
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);

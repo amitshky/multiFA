@@ -83,5 +83,5 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		sameSite: 'strict',
 		secure: false,
 	});
-	return res.sendFile(publicPath + '/placeholder.html');
+	return res.send('/profile');
 }
