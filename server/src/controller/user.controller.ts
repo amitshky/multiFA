@@ -12,11 +12,9 @@ export const createUserHandler = async (req: Request, res: Response) =>
 {
 	try
 	{
-		// TODO: dont save the user here
 		const user   = await createUser(req.body);
 		const qrData = await user.generateSSKey();
 		user.save();
-		//return res.json(omit(user.toJSON(), 'password', '__v')); // omit becuz deleting mutates the object 
 		qrcode.toDataURL(decodeURIComponent(qrData), (err, data: string) =>
 		{
 			if (err)
@@ -45,6 +43,7 @@ export const createUserHandler = async (req: Request, res: Response) =>
 				});
 		
 				return res.redirect('/reg-2fa');
+				//return res.json(omit(user.toJSON(), 'password', '__v')); // omit becuz deleting mutates the object 
 			}
 		});
 	}
@@ -57,9 +56,9 @@ export const createUserHandler = async (req: Request, res: Response) =>
 
 export const register2faHandler = async (req: Request, res: Response) =>
 {
-	// TODO: save the user here
 	const qrData = get(req, 'cookies.qrData');
 	if (!qrData)
 		return res.sendStatus(403); // forbidden
+		
 	res.send(qrcodeHtml(qrData));
 }
