@@ -19,10 +19,11 @@ const publicPath = config.get('publicPath');
 
 const routes = (app: Express): void =>
 {
+	app.get('/', (req: Request, res: Response) => res.redirect('/login'));
 	app.get('/healthcheck', (req: Request, res: Response) => res.sendStatus(200));
 
 	// login page
-	app.get('/login', (req: Request, res: Response) => res.sendFile(publicPath + '/login.html'));
+	app.get('/login',     (req: Request, res: Response) => res.sendFile(publicPath + '/login.html'));
 	// 2fa page
 	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
 	
@@ -33,6 +34,7 @@ const routes = (app: Express): void =>
 
 	// profile page
 	app.get('/profile', requiresUser, (req: Request, res: Response) => res.sendFile(publicPath + '/placeholder.html')); // TODO: add requires user middleware
+
 
 	// register user // create user
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
@@ -48,6 +50,9 @@ const routes = (app: Express): void =>
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
 	// logout // delete session
 	app.delete('/api/sessions', requiresUser, invalidateUserSessionHandler);
+
+	// default error page
+	app.get('*', (req: Request, res: Response) => res.status(404).sendFile(publicPath + '/error.html'));
 }
 
 export default routes;

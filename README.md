@@ -27,7 +27,7 @@ These should be globally installed:
 	PUBLIC_KEY = '<ENTER_YOUR_PUBLIC_KEY_HERE>'
 	```
 
-(Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
+(Type these commands by opening the command prompt (for Windows) in the root directory of this repository.)
 * This installs the project packages.
 	```
 	cd server
@@ -35,19 +35,19 @@ These should be globally installed:
 	cd ../app
 	flutter pub get
 	```
-	OR (for windows),
+	OR (for Windows),
 	```
 	./install.bat
 	```
 ### Build
 #### Server-side code
-(Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
+(Type these commands by opening the command prompt (for Windows) in the root directory of this repository.)
 * To start the server (runs nodemon for `src/server/app.ts`). This will directly run the typescript files without building javascript files.
 	```
 	cd server
 	npm run server
 	```
-	OR (for windows),
+	OR (for Windows),
 	```
 	./server.bat
 	```
@@ -60,7 +60,7 @@ OR,
 	npm run build
 	npm run server-js
 	```
-	OR (for windows),
+	OR (for Windows),
 	```
 	./server-build.bat
 	```
@@ -73,13 +73,13 @@ OR,
 
 * OR, you can also configure [USB Debugging](https://developer.android.com/studio/debug/dev-options).
 
-(Type these commands by opening the command prompt (for windows) in the root directory of this repository.)
+(Type these commands by opening the command prompt (for Windows) in the root directory of this repository.)
 * Build and run the project using the following command:
 	```
 	cd app
 	flutter run
 	```
-	OR (for windows),
+	OR (for Windows),
 	```
 	./app.bat
 	```
@@ -90,9 +90,18 @@ OR,
 	cd app
 	flutter run --release
 	```
-	OR (for windows),
+	OR (for Windows),
 	```
 	./app-rel.bat
+	```
+* You can also clean (deleting build files and other generated files) the flutter project using the following command.
+	```
+	cd app
+	flutter clean
+	```
+	OR (for Windows)
+	```
+	./app-clean.bat
 	```
 
 

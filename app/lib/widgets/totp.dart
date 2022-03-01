@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:app/style.dart';
 import 'package:app/api/totp_api.dart';
-import 'package:app/model/userdetails.dart';
+import 'package:app/models/userdetails.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 
 class TotpWidget extends StatefulWidget 
@@ -19,19 +20,30 @@ class TotpWidget extends StatefulWidget
 
 class _TotpWidgetState extends State<TotpWidget> 
 {
-	// TODO: stop timer when not needed and initialize timer and totp and stuff when needed
 	Timer? timer;
 	late int unixTime;
 	late String totp;
 	late int timeRemaining;
 
 	@override
-	void initState() 
+	void initState()
 	{
 		super.initState();
 		unixTime      = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 		totp          = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 		timeRemaining = 30 - (unixTime % 30);
+
+		timer = Timer.periodic(const Duration(seconds: 1), (_)
+		{
+			setState(()
+			{
+				unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+
+				if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
+
+				timeRemaining = 30 - (unixTime % 30);
+			});
+		});
 	}
 
 	@override
@@ -44,21 +56,6 @@ class _TotpWidgetState extends State<TotpWidget>
 	@override
 	Widget build(BuildContext context) 
 	{
-		if (mounted)
-		{
-			timer = Timer.periodic(const Duration(seconds: 1), (_)
-			{
-				setState(()
-				{
-					unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-
-					if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
-
-					timeRemaining = 30 - (unixTime % 30);
-				});
-			});
-		}
-
 		return ListTile(
 			key      : widget.key,
 			title    : Text(totp.substring(0, 3) + ' ' + totp.substring(3), style: Theme.of(context).textTheme.headline2), 
@@ -90,7 +87,15 @@ class _TotpWidgetState extends State<TotpWidget>
 	
 	void _stopTimer()
 	{
-		if (mounted) setState(() => timer?.cancel());
+		try
+		{
+			if (mounted) setState(() => timer?.cancel());
+		}
+		catch(_) 
+		{
+			// no proper response for this exception; seems to be only a debug thing
+			return;
+		}
 	}
 
 	void _delete(BuildContext context) 
@@ -101,20 +106,21 @@ class _TotpWidgetState extends State<TotpWidget>
 			{
 				return AlertDialog(
 					key    : widget.key,
-					title  : Text('Please Confirm', style: Theme.of(context).textTheme.headline3),
-					content: Text('Are you sure you want to remove this TOTP?', style: Theme.of(context).textTheme.bodyText1),
+					title  : const Text('Please Confirm', style: TextStyle(color: textColor)),
+					content: const Text('Are you sure you want to remove this TOTP?', style: TextStyle(color: textColor)),
 					backgroundColor: buttonColor,
-					actions: <Widget> [
+					actions: <Widget>[
 						TextButton( // "Yes" button
-							child    : Text('Yes', style: Theme.of(context).textTheme.bodyText1),
+							child    : const Text('Yes', style: TextStyle(color: textColor)),
 							onPressed: ()
 							{
 								Navigator.of(context).pop(); // Close the dialog
-								setState(() => widget.deleteTile(widget.userDetails));
+								Fluttertoast.showToast(msg: 'TOTP removed.', backgroundColor: buttonColor);
+								widget.deleteTile(widget.userDetails);
 							},
 						),
 						TextButton( // "No" button
-							child    : Text('No', style: Theme.of(context).textTheme.bodyText1),
+							child    : const Text('No', style: TextStyle(color: appColor)),
 							onPressed: () => Navigator.of(context).pop(), // Close the dialog
 						),
 					],
