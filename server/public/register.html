@@ -22,6 +22,7 @@
 					name          = "username" 
 					id            = "username" 
 					placeholder   = "Username"
+					minlength     = "4"
 					autofocus
 					required
 				/>
@@ -33,6 +34,7 @@
 					name          = "email" 
 					id            = "email" 
 					placeholder   = "Email"
+					pattern       = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
 					autofocus
 					required
 				/>
@@ -44,6 +46,7 @@
 					name          = "password" 
 					id            = "password" 
 					placeholder   = "Password"
+					pattern       = "^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$" 
 					autofocus
 					required
 				/>
@@ -55,6 +58,7 @@
 					name          = "passwordConfirmation" 
 					id            = "passwordConfirmation" 
 					placeholder   = "Confirm password"
+					pattern       = "^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$" 
 					autofocus
 					required
 				/>
@@ -63,7 +67,23 @@
 			<p class="form__text">
 				<a class="form__link" href="/login" id='linkCreateAccount'>Already have an account? Sign In</a>
 			</p>
+			<label for="token">
+				The password must contain at least
+				<ul>
+					<li>8 characters</li>
+					<li>one lowercase character</li>
+					<li>one number</li>
+					<li>and should not be same as your username or email.</li>
+				</ul> 
+			</label>
 		</form>
 	</div>
 </body>
+<script>
+	//var username = document.getElementById('username');
+	//username.oninvalid = function(event)
+	//{
+	//	event.target.setCustomValidity('Username should only contain alphanumeric character and underscore, and should be at least 4 characters long (e.g, _username, user_name, username_).');
+	//}
+</script>
 </html>

@@ -44,3 +44,5 @@ export const validateTOTP = async ({ userID, token }: { userID: string, token: s
 }
 
 export const findUser = async (query: FilterQuery<UserDocument>) => User.findOne(query).lean(); // lean returns plain old js objects (POJOs) instead of mongoose document // faster queries
+
+export const findUserDoc = async (query: FilterQuery<UserDocument>) => User.findOne(query);     // returns mongoose document // slower

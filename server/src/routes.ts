@@ -1,9 +1,12 @@
 import { Express, Request, Response } from 'express'
-import path from 'path'
+import config from 'config'
 
 import { validateRequest, requiresUser } from './middleware'
 import { createUserSchema, createUserSessionSchema } from './schema/user.schema'
-import { createUserHandler } from './controller/user.controller'
+import { 
+	createUserHandler,
+	register2faHandler
+} from './controller/user.controller'
 import { 
 	createUserSessionHandler, 
 	getUserSessionsHandler, 
@@ -12,7 +15,7 @@ import {
 } from './controller/session.controller'
 
 
-const publicPath = path.resolve(__dirname, '../public/');
+const publicPath = config.get('publicPath');
 
 const routes = (app: Express): void =>
 {
@@ -25,10 +28,18 @@ const routes = (app: Express): void =>
 	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
 	
 	// register page
-	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
+	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
+	// 2fa registration
+	app.get('/reg-2fa', register2faHandler);
+
+	// profile page
+	app.get('/profile', requiresUser, (req: Request, res: Response) => res.sendFile(publicPath + '/placeholder.html')); // TODO: add requires user middleware
+
 
 	// register user // create user
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
+	// verify 2fa registration
+	app.post('/api/users/reg-2fa', twoFASessionHandler); // TODO: modify requiresUser middleware and use it here
 
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
@@ -37,7 +48,6 @@ const routes = (app: Express): void =>
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
-
 	// logout // delete session
 	app.delete('/api/sessions', requiresUser, invalidateUserSessionHandler);
 

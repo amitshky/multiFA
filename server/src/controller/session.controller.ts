@@ -13,15 +13,16 @@ import {
 	findSessions 
 } from '../service/session.service'
 import { sign, decode } from '../utils/jwt.utils'
-import logger from '../logger'
 
+
+const publicPath = config.get('publicPath');
 
 export const createUserSessionHandler = async (req: Request, res: Response) =>
 {
 	// validate email and password
 	const user = await validatePassword(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 	if (!user)
-		return res.status(401).send('Invalid email or password');
+		return res.sendFile(publicPath + '/invalid_password.html');
 
 	// WARNINIG: this is stupid
 	// TODO: change it to something more secure
@@ -57,7 +58,7 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		return res.sendStatus(403); // forbidden
 	const user = await validateTOTP({ userID: userID, token: req.body.token }) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 	if (!user)
-		return res.status(401).send('Invalid token');
+		return res.sendFile(publicPath + '/invalid_token.html');
 
 	// create a session
 	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;
@@ -82,5 +83,5 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		sameSite: 'strict',
 		secure: false,
 	});
-	return res.send({ accessToken, refreshToken });
+	return res.redirect('/profile');
 }
