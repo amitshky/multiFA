@@ -174,19 +174,6 @@ body{
     text-decoration: underline;
 }
 
-.error__message{
-    text-align: center;
-    color: var(--color-error);
-    font-size: 5rem;
-    margin-top: 0.1rem;
-}
-.error__description{
-    text-align: center;
-    color: var(--color-error);
-    font-size: 1.5rem;
-    margin-top: 0rem;
-}
-
 label{
     display: block;
     color: var(--color-label);
@@ -202,6 +189,18 @@ label{
     margin-bottom: 2.0rem;
 }
 
-img {
-    width: 200px;
+.container .fa {
+    color: var(--color-primary);
+}
+
+.container .float_left {
+    float: left;
+}
+
+.align_center {
+    text-align: center;
+}
+
+.inline_display {
+    display: inline;
 }

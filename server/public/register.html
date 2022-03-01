@@ -63,6 +63,28 @@
 					required
 				/>
 			</div>
+			<div class="form__input-group">
+				<label>Select Authentication Type: </label>
+				<input 
+					class         = ""
+					type          = "radio" 
+					name          = "multiFactorOptions" 
+					id            = "twoFactor" 
+					value		  = "One Time Password"
+					checked
+					autofocus
+					required
+				/> <label for="twoFactor" class="inline_display">One Time Password</label>
+				<input 
+					class         = ""
+					type          = "radio" 
+					name          = "multiFactorOptions" 
+					id            = "threeFactor" 
+					value		  = "Fingerprint"
+					autofocus
+					required
+				/> <label for="threeFactor" class="inline_display">Fingerprint</label>
+			</div>
 			<button type="submit" class="form__button">Continue</button>
 			<p class="form__text">
 				<a class="form__link" href="/login" id='linkCreateAccount'>Already have an account? Sign In</a>
