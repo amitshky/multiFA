@@ -70,8 +70,6 @@ UserSchema.methods.generateSSKey = async function (): Promise<string>
 	const user   = this as UserDocument;
 	const secret = speakeasy.generateSecret({ name: user.email });
 	user.sskey   = secret.base32;
-	logger.info(secret.otpauth_url)
-	logger.info(decodeURIComponent(secret.otpauth_url!));
 	return secret.otpauth_url!;
 }
 

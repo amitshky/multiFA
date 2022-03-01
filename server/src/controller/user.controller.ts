@@ -50,5 +50,7 @@ export const createUserHandler = async (req: Request, res: Response) =>
 export const register2faHandler = async (req: Request, res: Response) =>
 {
 	const qrData = get(req, 'cookies.qrData');
+	if (!qrData)
+		return res.sendStatus(403); // forbidden
 	res.send(qrcodeHtml(qrData));
 }
