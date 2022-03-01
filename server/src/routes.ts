@@ -3,16 +3,20 @@ import config from 'config'
 
 import { validateRequest, requiresUser } from './middleware'
 import { createUserSchema, createUserSessionSchema } from './schema/user.schema'
+import { createUserHandler } from './controller/user.controller'
 import { 
-	createUserHandler,
-	register2faHandler
-} from './controller/user.controller'
+	register2faHandler,
+	register3faHandler,
+	profilePageHandler,
+	errorPageHandler
+} from './controller/routes.controller'
 import { 
 	createUserSessionHandler, 
 	getUserSessionsHandler, 
 	invalidateUserSessionHandler,
 	twoFASessionHandler
 } from './controller/session.controller'
+import { resolveTypeReferenceDirective } from 'typescript'
 
 
 const publicPath = config.get('publicPath');
@@ -28,13 +32,14 @@ const routes = (app: Express): void =>
 	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
 	
 	// register page
-	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
+	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
 	// 2fa registration
 	app.get('/reg-2fa', register2faHandler);
+	// 3fa registration
+	app.get('/reg-3fa', register3faHandler);
 
 	// profile page
-	app.get('/profile', requiresUser, (req: Request, res: Response) => res.sendFile(publicPath + '/placeholder.html')); // TODO: add requires user middleware
-
+	app.get('/profile', requiresUser, profilePageHandler);
 
 	// register user // create user
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
@@ -49,10 +54,13 @@ const routes = (app: Express): void =>
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
 	// logout // delete session
-	app.delete('/api/sessions', requiresUser, invalidateUserSessionHandler);
+	app.delete('/api/sessions/', requiresUser, invalidateUserSessionHandler);
+
+	// error route
+	app.get('/error', errorPageHandler)
 
 	// default error page
-	app.get('*', (req: Request, res: Response) => res.status(404).sendFile(publicPath + '/error.html'));
+	app.get('*', (req: Request, res: Response) => res.redirect('/error?msg=Resource-not-found&status=404'));
 }
 
 export default routes;

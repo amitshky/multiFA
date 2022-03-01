@@ -1,3 +1,6 @@
+const profileHtml = (username: string, email: string) =>
+{
+	return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,3 +38,7 @@
 	</div>
 </body>
 </html>
+	`
+}
+
+export default profileHtml;
