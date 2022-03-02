@@ -33,7 +33,6 @@ const profileHtml = (username: string, email: string) =>
 				</div>
 			</div>
 		</div>
-		
 		<button type="submit" class="form__button">Logout</button>
 	</div>
 </body>

@@ -14,7 +14,8 @@ import {
 	createUserSessionHandler, 
 	getUserSessionsHandler, 
 	invalidateUserSessionHandler,
-	twoFASessionHandler
+	twoFASessionHandler,
+	threeFASessionHandler
 } from './controller/session.controller'
 
 
@@ -29,9 +30,11 @@ const routes = (app: Express): void =>
 	app.get('/login',     (req: Request, res: Response) => res.sendFile(publicPath + '/login.html'));
 	// 2fa page
 	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
+	// 3fa page
+	app.get('/check-3fa', (req: Request, res: Response) => res.sendFile(publicPath + '/fingerprint.html'));
 	
 	// register page
-	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
+	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
 	// 2fa registration
 	app.get('/reg-2fa', register2faHandler); // TODO: maybe implement something like requiresUser middleware
 	// 3fa registration
@@ -44,11 +47,15 @@ const routes = (app: Express): void =>
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
 	// verify 2fa registration
 	app.post('/api/users/reg-2fa', twoFASessionHandler);
+	// verify 3fa registration
+	app.post('/api/users/reg-3fa', threeFASessionHandler);
 
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
 	// check totp
 	app.post('/api/sessions/check-2fa', twoFASessionHandler);
+	// check fnigerprint
+	app.post('/api/sessions/check-3fa', threeFASessionHandler);
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);

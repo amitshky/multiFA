@@ -22,9 +22,7 @@ const qrcodeHtml = (qrData: string) =>
 			<div class="qr_container">
 				<img src="${qrData}" width="200">
 			</div>
-
 			<label for="token"> Use your token generator app to scan and generate a token, and enter it below. </label>
-
 			<div class="form__input-group">
 				<input 
 					class         = "form__input"
@@ -41,7 +39,6 @@ const qrcodeHtml = (qrData: string) =>
 					required
 				/>
 			</div>
-
 			<button type="submit" class="form__button">Verify</button>
 			<p class="form__text">
 				<a class="form__link" href="/register" id='linkCreateAccount'>Back to registration</a>

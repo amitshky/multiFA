@@ -26,31 +26,25 @@ const UserSchema = new mongoose.Schema({
 		type    : String,
 		required: true,
 		default : 'N/A'
+	},
+	multiFactorOptions: { // the options are 'totp', 'fingerprint', and 'both'
+		type    : String,
+		required: true,
+		default : 'totp'
 	}
-	//multiFactorOptions: {
-	//	hasTotp: {
-	//		type    : Boolean,
-	//		required: true,
-	//		default : true
-	//	},
-	//	hasBiometric: {
-	//		type    : Boolean,
-	//		required: true,
-	//		default : true
-	//	},
-	//}
 }, { timestamps: true });
 
 // all the properties the mongodb document should have
 // so that we can get our custom type definitions on the schema
 export interface UserDocument extends mongoose.Document
 {
-	email: string;
-	username: string;
-	password: string;
-	sskey: string;
-	createdAt: Date;
-	UpdatedAt: Date;
+	email             : string;
+	username          : string;
+	password          : string;
+	sskey             : string;
+	multiFactorOptions: string
+	createdAt         : Date;
+	UpdatedAt         : Date;
 
 	generateSSKey(): Promise<string>;
 
@@ -82,7 +76,10 @@ UserSchema.methods.generateSSKey = async function (): Promise<string>
 	const user   = this as UserDocument;
 	const secret = speakeasy.generateSecret({ name: user.email });
 	user.sskey   = secret.base32;
-	return secret.otpauth_url!;
+
+	// custom otpauth uri becuz we have to send multifactor option data to the app
+	const otpauthUri = `otpauth://${user.multiFactorOptions}/${user.email}?secret=${user.sskey}`;
+	return otpauthUri;
 }
 
 UserSchema.methods.comparePassword = async function (candidatedPassword: string): Promise<boolean>

@@ -73,6 +73,7 @@
 					value         = "totp"
 					autofocus
 					required
+					checked
 				/> <label for="twoFactor" class="inline_display">Time-based OTP</label>
 				<input 
 					class         = ""
@@ -93,7 +94,6 @@
 					style         = "margin-left: 3rem;"
 					autofocus
 					required
-					checked
 				/> <label for="threeFactor" class="inline_display">Both</label>
 			</div>
 			<button type="submit" class="form__button" >Continue</button>
@@ -124,7 +124,8 @@
 				item.setAttribute("required", false);
 			});
 			return true;
-		} else 
+		} 
+		else 
 		{
 			document.getElementsByName("multiFactorOptions").forEach(function(item, index, array) 
 			{

@@ -1,4 +1,4 @@
-const errorHtml = (errorMsg: string) =>
+const fingerprintRegHtml = (qrData: string) =>
 {
 	return `
 <!DOCTYPE html>
@@ -17,13 +17,14 @@ const errorHtml = (errorMsg: string) =>
 <body>
 	<div class="container">
 		<form action="/api/users/reg-2fa" id="qrForm" class="form" method="POST">
-			<h1 class="form__title">Oops!!</h1>
+			<h1 class="form__title">Fingerprint Registration</h1>
 			<div class="qr_container">
-				<img src="./assets/error.png" width="150" >
+				<img src="${qrData}" width="200">
 			</div>
-			<label class="align_center"> ${errorMsg} </label>
+			<label class="align_center"> Please use the app to scan the QR code and verify your fingerprint. </label>
+			<button type="submit" class="form__button">Verify</button>
 			<p class="form__text">
-				<a class="form__link" href="/" id='linkCreateAccount'>Return to Homepage</a>
+				<a class="form__link" href="/register" id='linkCreateAccount'>Back to regsitration</a>
 			</p>
 		</form>
 	</div>
@@ -32,4 +33,4 @@ const errorHtml = (errorMsg: string) =>
 	`;
 }
 
-export default errorHtml;
+export default fingerprintRegHtml;

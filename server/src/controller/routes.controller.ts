@@ -3,13 +3,12 @@ import { get } from 'lodash'
 import config from 'config'
 
 import { 
+	errorHtml,
 	qrcodeHtml,
 	profileHtml,
-	errorHtml
+	fingerprintRegHtml
 } from '../html'
 
-
-const publicPath = config.get('publicPath');
 
 export const profilePageHandler = async (req: Request, res: Response) =>
 {
@@ -25,17 +24,17 @@ export const register2faHandler = async (req: Request, res: Response) =>
 	const qrData = get(req, 'cookies.qrData');
 	if (!qrData)
 		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
-		
-	res.send(qrcodeHtml(qrData));
+
+	return res.send(qrcodeHtml(qrData));
 }
 
 export const register3faHandler = async (req: Request, res: Response) =>
 {
-	//const userID = get(req, 'cookies.userID');
-	//if (!userID)
-	//	return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
-		
-	res.sendFile(publicPath + '/fingerprint.html');
+	const qrData = get(req, 'cookies.qrData');
+	if (!qrData)
+		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
+
+	return res.send(fingerprintRegHtml(qrData));
 }
 
 export const errorPageHandler = async (req: Request, res: Response) =>
