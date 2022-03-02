@@ -23,7 +23,7 @@ export const createUserHandler = async (req: Request, res: Response) =>
 				if (err)
 				{
 					logger.error(err);
-					return res.redirect('/error?msg=Unable-to-generate-QR-code&status=500'); // unexpected condition
+					return res.redirect('/error?msg=Unable+to+generate+QR+code&status=500'); // unexpected condition
 				}
 				else
 				{
@@ -62,7 +62,7 @@ export const createUserHandler = async (req: Request, res: Response) =>
 				if (err)
 				{
 					logger.error(err);
-					return res.redirect('/error?msg=Unable-to-generate-QR-code&status=500'); // unexpected condition
+					return res.redirect('/error?msg=Unable+to+generate+QR+code&status=500'); // unexpected condition
 				}
 				else
 				{
@@ -94,6 +94,6 @@ export const createUserHandler = async (req: Request, res: Response) =>
 	catch (err: any)
 	{
 		logger.error(err);
-		return res.status(409).send(err.message);
+		return res.redirect(`/error?msg=${encodeURIComponent(err.message)}&status=409`);
 	}
 }

@@ -38,7 +38,7 @@ const profileHtml = (username: string, email: string) =>
 	</div>
 </body>
 </html>
-	`
+	`;
 }
 
 export default profileHtml;

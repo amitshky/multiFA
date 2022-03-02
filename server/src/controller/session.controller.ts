@@ -22,7 +22,7 @@ export const createUserSessionHandler = async (req: Request, res: Response) =>
 	// validate email and password
 	const user = await validatePassword(req.body) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 	if (!user)
-		return res.redirect('/error?msg=Invalid-username-or-password&status=200');
+		return res.redirect('/error?msg=Invalid+username+or+password&status=200');
 
 	// WARNINIG: this is stupid
 	// TODO: change it to something more secure
@@ -55,10 +55,10 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 {
 	const userID = get(req, 'cookies.userID');
 	if (!userID)
-		return res.redirect('/error?msg=Unauthorized-access&status=403'); // forbidden
+		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
 	const user = await validateTOTP({ userID: userID, token: req.body.token }) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
 	if (!user)
-		return res.redirect('/error?msg=Invalid-token&status=200');
+		return res.redirect('/error?msg=Invalid+token&status=200');
 
 	// create a session
 	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;

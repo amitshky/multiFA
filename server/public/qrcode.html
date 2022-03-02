@@ -17,7 +17,7 @@
 			<h1 class="form__title">Two-factor authentication</h1>
 
 			<div class="qr_container">
-				<img src="<%= Request.QueryString('qrdata') %>" width="200" >
+				<img src="${qrdata}" width="200">
 			</div>
 
 			<label for="token"> Use your token generator app to scan and generate a token, and enter it below. </label>

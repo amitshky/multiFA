@@ -30,7 +30,7 @@ const errorHtml = (errorMsg: string) =>
 	</div>
 </body>
 </html>
-	`
+	`;
 }
 
 export default errorHtml;

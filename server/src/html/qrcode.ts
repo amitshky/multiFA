@@ -20,7 +20,7 @@ const qrcodeHtml = (qrData: string) =>
 			<h1 class="form__title">Two-factor authentication</h1>
 
 			<div class="qr_container">
-				<img src="${qrData}" width="200" >
+				<img src="${qrData}" width="200">
 			</div>
 
 			<label for="token"> Use your token generator app to scan and generate a token, and enter it below. </label>
@@ -50,7 +50,7 @@ const qrcodeHtml = (qrData: string) =>
 	</div>
 </body>
 </html>
-	`
+	`;
 }
 
 export default qrcodeHtml;

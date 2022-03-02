@@ -2,31 +2,43 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt' // hashing password
 import config from 'config' // defaults
 import speakeasy from 'speakeasy' // totp
-import logger from '../logger';
+import { ObjectSchema } from 'yup';
 
 
 export const privateFields = ['password', 'sskey', '__v']; // private fields of the db that you dont want to send as json
 
 const UserSchema = new mongoose.Schema({
 	email: {
-		type: String,
+		type    : String,
 		required: true,
-		unique: true
+		unique  : true
 	},
 	username: {
-		type: String,
+		type    : String,
 		required: true,
-		unique: true
+		unique  : true
 	},
 	password: {
-		type: String,
+		type    : String,
 		required: true
 	},
 	sskey: { // shared secret key for totp verification
-		type: String,
+		type    : String,
 		required: true,
-		default: 'N/A'
+		default : 'N/A'
 	}
+	//multiFactorOptions: {
+	//	hasTotp: {
+	//		type    : Boolean,
+	//		required: true,
+	//		default : true
+	//	},
+	//	hasBiometric: {
+	//		type    : Boolean,
+	//		required: true,
+	//		default : true
+	//	},
+	//}
 }, { timestamps: true });
 
 // all the properties the mongodb document should have

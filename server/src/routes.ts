@@ -16,7 +16,6 @@ import {
 	invalidateUserSessionHandler,
 	twoFASessionHandler
 } from './controller/session.controller'
-import { resolveTypeReferenceDirective } from 'typescript'
 
 
 const publicPath = config.get('publicPath');
@@ -60,7 +59,7 @@ const routes = (app: Express): void =>
 	app.get('/error', errorPageHandler)
 
 	// default error page
-	app.get('*', (req: Request, res: Response) => res.redirect('/error?msg=Resource-not-found&status=404'));
+	app.get('*', (req: Request, res: Response) => res.redirect('/error?msg=Resource+not+found&status=404'));
 }
 
 export default routes;
