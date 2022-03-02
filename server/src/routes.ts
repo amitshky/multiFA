@@ -29,9 +29,9 @@ const routes = (app: Express): void =>
 	// login page
 	app.get('/login',     (req: Request, res: Response) => res.sendFile(publicPath + '/login.html'));
 	// 2fa page
-	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));
+	app.get('/check-2fa', (req: Request, res: Response) => res.sendFile(publicPath + '/totp.html'));        // TODO: maybe implement something like requiresUser middleware
 	// 3fa page
-	app.get('/check-3fa', (req: Request, res: Response) => res.sendFile(publicPath + '/fingerprint.html'));
+	app.get('/check-3fa', (req: Request, res: Response) => res.sendFile(publicPath + '/fingerprint.html')); // TODO: maybe implement something like requiresUser middleware
 	
 	// register page
 	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
