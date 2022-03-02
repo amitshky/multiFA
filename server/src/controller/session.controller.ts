@@ -22,7 +22,7 @@ export const createUserSessionHandler = async (req: Request, res: Response) =>
 	if (!user)
 		return res.redirect('/error?msg=Invalid+username+or+password&status=400');
 
-	if (user.multiFactorOptions === 'totp' || 'both')
+	if ((user.multiFactorOptions === 'totp') || (user.multiFactorOptions === 'both'))
 	{
 		// WARNINIG: this is stupid
 		// TODO: change it to something more secure
@@ -93,7 +93,7 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		const refreshToken = sign(session, { expiresIn: config.get('refreshTokenTTL') }); // 1 year
 
 		res.cookie('accessToken', accessToken, {
-			maxAge  : config.get('accessTokenTTL'), // 15 mins
+			maxAge  : 900000, // 15 mins
 			httpOnly: true,
 			domain  : config.get('host'),
 			path    : '/',
@@ -101,7 +101,7 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 			secure  : false,
 		});
 		res.cookie('refreshToken', refreshToken, {
-			maxAge  : config.get('refreshTokenTTL'), // 1 year
+			maxAge  : 3.154e10, // 1 year
 			httpOnly: true,
 			domain  : config.get('host'),
 			path    : '/',

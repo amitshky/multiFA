@@ -34,7 +34,7 @@ const routes = (app: Express): void =>
 	app.get('/check-3fa', (req: Request, res: Response) => res.sendFile(publicPath + '/fingerprint.html'));
 	
 	// register page
-	app.get('/register', (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
+	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
 	// 2fa registration
 	app.get('/reg-2fa', register2faHandler); // TODO: maybe implement something like requiresUser middleware
 	// 3fa registration
