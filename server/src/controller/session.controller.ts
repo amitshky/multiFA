@@ -26,12 +26,12 @@ export const createUserSessionHandler = async (req: Request, res: Response) =>
 	{
 		// WARNINIG: this is stupid
 		// TODO: change it to something more secure
-		const nextRoute = 'check-2fa';
+		const nextRoute = '/check-2fa';
 		res.cookie('userID', user._id, {
 			maxAge  : config.get('verificationCookiesTTL'), // 5 min
 			httpOnly: true,
 			domain  : config.get('host'),
-			path    : `/api/sessions/${nextRoute}`,
+			path    : `/api/sessions${nextRoute}`,
 			sameSite: 'strict',
 			secure  : false,
 		});
@@ -41,12 +41,12 @@ export const createUserSessionHandler = async (req: Request, res: Response) =>
 	{
 		// WARNINIG: this is stupid
 		// TODO: change it to something more secure
-		const nextRoute = 'check-3fa';
+		const nextRoute = '/check-3fa';
 		res.cookie('userID', user._id, {
 			maxAge  : config.get('verificationCookiesTTL'), // 5 min
 			httpOnly: true,
 			domain  : config.get('host'),
-			path    : `/api/sessions/${nextRoute}`,
+			path    : `/api/sessions${nextRoute}`,
 			sameSite: 'strict',
 			secure  : false,
 		});
@@ -116,7 +116,15 @@ export const twoFASessionHandler = async (req: Request, res: Response) =>
 		if (!userTotp)
 			return res.redirect('/error?msg=Invalid+token&status=400');
 		
-		await threeFASessionHandler(req, res);
+		res.cookie('userID', user._id, {
+			maxAge  : config.get('verificationCookiesTTL'), // 5 min
+			httpOnly: true,
+			domain  : config.get('host'),
+			path    : `/api/sessions/check-3fa`,
+			sameSite: 'strict',
+			secure  : false,
+		});
+		return res.redirect('/check-3fa')
 	}
 	else
 	{
