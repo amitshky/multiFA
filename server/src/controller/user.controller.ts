@@ -27,6 +27,8 @@ export const createUserHandler = async (req: Request, res: Response) =>
 				}
 				else
 				{
+					// WARNINIG: this is stupid
+					// TODO: change it to something more secure
 					res.cookie('qrData', data, { // to display QR code in /reg-2fa
 						maxAge: 300000, // 5 min
 						httpOnly: true,
@@ -35,7 +37,6 @@ export const createUserHandler = async (req: Request, res: Response) =>
 						sameSite: 'strict',
 						secure: false,
 					});
-
 					res.cookie('userID', user._id, {
 						maxAge: 300000, // 5 min
 						httpOnly: true,

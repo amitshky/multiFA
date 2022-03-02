@@ -33,9 +33,9 @@ const routes = (app: Express): void =>
 	// register page
 	app.get('/register',  (req: Request, res: Response) => res.sendFile(publicPath + '/register.html'));
 	// 2fa registration
-	app.get('/reg-2fa', register2faHandler);
+	app.get('/reg-2fa', register2faHandler); // TODO: maybe implement something like requiresUser middleware
 	// 3fa registration
-	app.get('/reg-3fa', register3faHandler);
+	app.get('/reg-3fa', register3faHandler); // TODO: maybe implement something like requiresUser middleware
 
 	// profile page
 	app.get('/profile', requiresUser, profilePageHandler);
@@ -43,12 +43,12 @@ const routes = (app: Express): void =>
 	// register user // create user
 	app.post('/api/users', validateRequest(createUserSchema), createUserHandler);
 	// verify 2fa registration
-	app.post('/api/users/reg-2fa', twoFASessionHandler); // TODO: modify requiresUser middleware and use it here
+	app.post('/api/users/reg-2fa', twoFASessionHandler);
 
 	// login // create session
 	app.post('/api/sessions', validateRequest(createUserSessionSchema), createUserSessionHandler);
 	// check totp
-	app.post('/api/sessions/check-2fa', twoFASessionHandler); // TODO: modify requiresUser middleware and use it here
+	app.post('/api/sessions/check-2fa', twoFASessionHandler);
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
