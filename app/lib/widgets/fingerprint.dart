@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-import 'package:app/api/local_auth_api.dart';
 import 'package:app/style.dart';
+import 'package:app/api/http_api.dart';
+import 'package:app/api/local_auth_api.dart';
 
 
 class FingerprintWidget extends StatelessWidget
@@ -24,6 +26,8 @@ class FingerprintWidget extends StatelessWidget
 				if (isAuthenticated)
 				{
 					// TODO: create a dialog that says "Authenticated"
+					await HttpApi.sendVerification('test@test.com', 'HQ2FKJRXMFWUQZDFPJRCKNZEKQ7HWNCFMMWDCL2DORKEKRRMLN4Q');
+					Fluttertoast.showToast(msg: 'Authentication sent.', backgroundColor: buttonColor);
 				}
 			},
 		);
