@@ -40,7 +40,7 @@ export const register3faHandler = async (req: Request, res: Response) =>
 export const errorPageHandler = async (req: Request, res: Response) =>
 {
 	if (!get(req, 'query.msg') || !get(req, 'query.status'))
-		return res.send(errorHtml('NO error specified'));
+		return res.send(errorHtml('No error specified'));
 
 	const status  = parseInt(req.query.status as string, 10);
 	const message = decodeURIComponent(req.query.msg as string);

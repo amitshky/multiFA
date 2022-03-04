@@ -2,13 +2,16 @@ import 'dart:convert';
 
 import 'package:app/models/userdetails.dart';
 
+
 Map<String, String>? otpauthUriDecode(String uri)
 {
-	if (uri.indexOf('otpauth://totp/') == 0) // check if the uri is in the correct format
+	// the uri is a custom otpauth uri with the format: multifa://{multiFactorOptions}?email={email}&secret={secretKey}
+	if (uri.indexOf('multifa://') == 0) // check if the uri is in the correct format
 	{
-		final String secretKey = uri.substring(uri.indexOf('=') + 1);
-		final String email     = uri.substring(uri.indexOf('totp/') + 5, uri.indexOf('?'));
-		return { 'email': email, 'secretKey': secretKey };
+		final String multiFactorOptions = uri.substring(uri.indexOf('multifa://') + 10, uri.indexOf('?'));
+		final String email              = uri.substring(uri.indexOf('email=') + 6, uri.indexOf('&'));
+		final String secretKey          = uri.substring(uri.indexOf('secret=') + 7);
+		return { 'multiFactorOptions': multiFactorOptions, 'email': email, 'secretKey': secretKey };
 	}
 
 	return null;

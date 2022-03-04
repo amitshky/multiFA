@@ -2,7 +2,6 @@ import mongoose from 'mongoose'
 import bcrypt from 'bcrypt' // hashing password
 import config from 'config' // defaults
 import speakeasy from 'speakeasy' // totp
-import { ObjectSchema } from 'yup';
 
 
 export const privateFields = ['password', 'sskey', '__v']; // private fields of the db that you dont want to send as json
@@ -78,7 +77,8 @@ UserSchema.methods.generateSSKey = async function (): Promise<string>
 	user.sskey   = secret.base32;
 
 	// custom otpauth uri becuz we have to send multifactor option data to the app
-	const otpauthUri = `otpauth://${user.multiFactorOptions}/${user.email}?secret=${user.sskey}`;
+	// format of the uri: multifa://{multiFactorOptions}?email={email}&secret={secretKey}
+	const otpauthUri = `multifa://${user.multiFactorOptions}?email=${user.email}&secret=${user.sskey}`;
 	return otpauthUri;
 }
 

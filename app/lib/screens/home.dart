@@ -98,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen>
 
 	Future<void> _loadData() async
 	{
-		await UserSecureStorage.load() // load user details (email and secret key) from local storage
+		await UserSecureStorage.loadTotpUsers() // load user details (email and secret key) from local storage
 			.then((value) => _userDetailsList = value ?? <UserDetails>[])
 			.whenComplete(()
 			{
@@ -110,6 +110,20 @@ class _HomeScreenState extends State<HomeScreen>
 					}
 				}
 			});
+			
+		await UserSecureStorage.loadFingerprintUsers() // load user details (email and secret key) from local storage
+			.then((value) => _userDetailsList = value ?? <UserDetails>[])
+			.whenComplete(()
+			{
+				for (int i = 0; i < _userDetailsList.length; ++i)
+				{
+					if (!_idSet.add(_userDetailsList[i].secretKey))
+					{
+						_userDetailsList.removeAt(i); // remove if duplicate
+					}
+				}
+			});
+
 		setState(() {}); // screen not updating after initState() without this
 	}
 
