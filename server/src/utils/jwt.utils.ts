@@ -20,3 +20,15 @@ export const decode = (token: string) =>
 		return { valid: false, expired: error.message === 'jwt expired', decoded: null };
 	}
 }
+
+export const decodeFingerprintSession = (token: string, secretKey: string) =>
+{
+	try 
+	{
+		return jwt.verify(token, secretKey);
+	}
+	catch (error: any)
+	{
+		return null;
+	}
+}

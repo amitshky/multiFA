@@ -5,14 +5,15 @@ import { LeanDocument } from 'mongoose'
 
 import { UserDocument } from '../model/user.model'
 import { SessionDocument } from '../model/session.model'
-import { findUser, validatePassword, validateTOTP } from '../service/user.service'
+import { findUser, findUserDoc, updateUser, validatePassword, validateTOTP } from '../service/user.service'
 import { 
 	createSession, 
 	createAccessToken, 
 	updateSession, 
 	findSessions 
 } from '../service/session.service'
-import { sign, decode } from '../utils/jwt.utils'
+import { sign, decodeFingerprintSession } from '../utils/jwt.utils'
+import logger from '../logger'
 
 
 export const createUserSessionHandler = async (req: Request, res: Response) =>
@@ -137,7 +138,52 @@ export const threeFASessionHandler = async (req: Request, res: Response) =>
 	const userID = get(req, 'cookies.userID');
 	if (!userID)
 		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
+	
+	const user = await findUser({ _id: userID }) as LeanDocument<Omit<UserDocument, 'password'>>;
+	if (!user.sessionStatus)
+		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
+	
+	updateUser({ _id: userID }, { sessionStatus: false });
+	
+	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;
+	// create access token and refresh token
+	const accessToken  = createAccessToken({ user: user, session });
+	const refreshToken = sign(session, { expiresIn: config.get('refreshTokenTTL') }); // 1 year
 
-	// TODO: implement threeFASessionHandler
-	return res.redirect('/error?msg=Fingerprint+verification+not+implemented+yet&status=200');
+	res.cookie('accessToken', accessToken, {
+		maxAge  : 900000, // 15 mins
+		httpOnly: true,
+		domain  : config.get('host'),
+		path    : '/',
+		sameSite: 'strict',
+		secure  : false,
+	});
+	res.cookie('refreshToken', refreshToken, {
+		maxAge  : 3.154e10, // 1 year
+		httpOnly: true,
+		domain  : config.get('host'),
+		path    : '/',
+		sameSite: 'strict',
+		secure  : false,
+	});
+	return res.redirect('/profile');
+}
+
+export const validate3faSessionHandler = async (req: Request, res: Response) => // for the app
+{
+	const email = get(req, 'headers.email');
+	if (!email)
+		return res.sendStatus(403); // forbidden
+	
+	updateUser({ email: email }, { sessionStatus: true });
+	setTimeout(() => updateUser({ email: email }, { sessionStatus: false }), 30000);
+	res.sendStatus(200);
+	
+	//const token = get(req, 'body.token');
+	//if (!token)
+	//	return res.sendStatus(403);
+	
+	//const decodedToken = decodeFingerprintSession(token, 'HQ2FKJRXMFWUQZDFPJRCKNZEKQ7HWNCFMMWDCL2DORKEKRRMLN4Q');
+	//logger.info(decodedToken);
+	//return res.sendStatus(200);
 }

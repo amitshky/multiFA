@@ -30,6 +30,11 @@ const UserSchema = new mongoose.Schema({
 		type    : String,
 		required: true,
 		default : 'totp'
+	},
+	sessionStatus: { // for fingerprint validation
+		type    : Boolean,
+		required: true,
+		default : false
 	}
 }, { timestamps: true });
 
@@ -41,7 +46,8 @@ export interface UserDocument extends mongoose.Document
 	username          : string;
 	password          : string;
 	sskey             : string;
-	multiFactorOptions: string
+	multiFactorOptions: string;
+	sessionStatus     : boolean;
 	createdAt         : Date;
 	UpdatedAt         : Date;
 

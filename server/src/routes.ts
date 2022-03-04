@@ -15,7 +15,8 @@ import {
 	getUserSessionsHandler, 
 	invalidateUserSessionHandler,
 	twoFASessionHandler,
-	threeFASessionHandler
+	threeFASessionHandler,
+	validate3faSessionHandler
 } from './controller/session.controller'
 
 
@@ -56,6 +57,9 @@ const routes = (app: Express): void =>
 	app.post('/api/sessions/check-2fa', twoFASessionHandler);
 	// check fnigerprint
 	app.post('/api/sessions/check-3fa', threeFASessionHandler);
+
+	// get 3fa from the app
+	app.post('/api/sessions/rec-3fa', validate3faSessionHandler)
 
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
