@@ -16,7 +16,7 @@ const fingerprintRegHtml = (qrData: string) =>
 </head>
 <body>
 	<div class="container">
-		<form action="/api/users/reg-2fa" id="qrForm" class="form" method="POST">
+		<form action="/api/users/reg-3fa" id="qrForm" class="form" method="POST">
 			<h1 class="form__title">Fingerprint Registration</h1>
 			<div class="qr_container">
 				<img src="${qrData}" width="200">

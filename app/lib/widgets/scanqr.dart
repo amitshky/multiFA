@@ -21,7 +21,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 	{
 		return ElevatedButton.icon(
 			icon : const Icon(Icons.add, size: 26, color: appColor),
-			label: Text('Add TOTP', style: Theme.of(context).textTheme.bodyText1),
+			label: Text('Add account', style: Theme.of(context).textTheme.bodyText1),
 			style: ElevatedButton.styleFrom(
 				primary  : appBgColor,
 				elevation: 0,
