@@ -54,7 +54,7 @@ export const validateFingerprintSessionStatus = async (userID: string) =>
 	if (!isValid)
 		return false;
 
-	User.updateOne({ _id: user._id }, { sessionToken: 'N/A' }); // invalidate session token after success
+	await User.updateOne({ _id: user._id }, { sessionToken: 'N/A' }); // invalidate session token after success
 	return omit(user.toJSON(), privateFields);
 }
 

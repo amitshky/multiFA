@@ -27,9 +27,7 @@ export const decodeFingerprintSession = (token: string, secretKey: string) =>
 {
 	try 
 	{
-		logger.info(token);
 		const payload = jwt.verify(token, secretKey);
-		logger.info(payload);
 		return payload;
 	}
 	catch (error: any)
