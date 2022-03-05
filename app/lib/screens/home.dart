@@ -1,5 +1,5 @@
 import 'package:app/style.dart';
-import 'package:app/widgets/biometricsTile.dart';
+import 'package:app/widgets/fingerprint.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen>
 				{
 					if (_userDetailsList[index].multiFactorOptions == 'fingerprint')
 					{
-						return BiometricsTileWidget(
+						return FingerprintWidget(
 							key        : UniqueKey(), 
 							userDetails: _userDetailsList[index], 
 							deleteTile : _deleteTile

@@ -5,7 +5,13 @@ import { LeanDocument } from 'mongoose'
 
 import { UserDocument } from '../model/user.model'
 import { SessionDocument } from '../model/session.model'
-import { findUser, findUserDoc, updateUser, validatePassword, validateTOTP } from '../service/user.service'
+import { 
+	findUser, 
+	updateUser, 
+	validatePassword, 
+	validateTOTP,
+	validateFingerprintSessionStatus
+} from '../service/user.service'
 import { 
 	createSession, 
 	createAccessToken, 
@@ -139,11 +145,9 @@ export const threeFASessionHandler = async (req: Request, res: Response) =>
 	if (!userID)
 		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
 	
-	const user = await findUser({ _id: userID }) as LeanDocument<Omit<UserDocument, 'password'>>;
-	if (!user.sessionStatus)
+	const user = await validateFingerprintSessionStatus(userID) as Omit<UserDocument, 'password'> | LeanDocument<Omit<UserDocument, 'password'>>;
+	if (!user)
 		return res.redirect('/error?msg=Unauthorized+access&status=403'); // forbidden
-	
-	updateUser({ _id: userID }, { sessionStatus: false });
 	
 	const session = await createSession(user._id, req.get('user-agent') || '') as Omit<SessionDocument, 'password'> | LeanDocument<Omit<SessionDocument, 'password'>>;
 	// create access token and refresh token
@@ -173,17 +177,12 @@ export const validate3faSessionHandler = async (req: Request, res: Response) => 
 {
 	const email = get(req, 'headers.email');
 	if (!email)
-		return res.sendStatus(403); // forbidden
+		return res.sendStatus(403); // forbidden status send to app
 	
-	updateUser({ email: email }, { sessionStatus: true });
-	setTimeout(() => updateUser({ email: email }, { sessionStatus: false }), 30000);
-	res.sendStatus(200);
+	const sessionToken = get(req, 'body.sessionToken');
+	if (!sessionToken)
+		return res.sendStatus(403); // forbidden status send to app
 	
-	//const token = get(req, 'body.token');
-	//if (!token)
-	//	return res.sendStatus(403);
-	
-	//const decodedToken = decodeFingerprintSession(token, 'HQ2FKJRXMFWUQZDFPJRCKNZEKQ7HWNCFMMWDCL2DORKEKRRMLN4Q');
-	//logger.info(decodedToken);
-	//return res.sendStatus(200);
+	updateUser({ email: email }, { sessionToken: sessionToken });
+	res.sendStatus(200); // OK status send to app
 }

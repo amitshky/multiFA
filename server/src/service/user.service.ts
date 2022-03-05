@@ -3,6 +3,7 @@ import { DocumentDefinition, FilterQuery, UpdateQuery } from 'mongoose'
 
 import logger from '../logger'
 import User, { UserDocument, privateFields } from '../model/user.model'
+import { decodeFingerprintSession } from '../utils/jwt.utils'
 
 export const createUser = async (input: DocumentDefinition<UserDocument>) =>
 {
@@ -43,9 +44,21 @@ export const validateTOTP = async ({ userID, token }: { userID: string, token: s
 	return omit(user.toJSON(), privateFields);
 }
 
-export const findUser = async (query: FilterQuery<UserDocument>) => User.findOne(query).lean(); // lean returns plain old js objects (POJOs) instead of mongoose document // faster queries
+export const validateFingerprintSessionStatus = async (userID: string) =>
+{
+	const user = await User.findOne({ _id: userID });
+	if (!user)
+		return false;
+	
+	const isValid = decodeFingerprintSession(user.sessionToken, user.sskey);
+	if (!isValid)
+		return false;
 
-export const findUserDoc = async (query: FilterQuery<UserDocument>) => User.findOne(query);     // returns mongoose document // slower
+	User.updateOne({ _id: user._id }, { sessionToken: 'N/A' }); // invalidate session token after success
+	return omit(user.toJSON(), privateFields);
+}
+
+export const findUser = async (query: FilterQuery<UserDocument>) => User.findOne(query).lean(); // lean returns plain old js objects (POJOs) instead of mongoose document // faster queries
 
 export const updateUser = async (
 	query: FilterQuery<UserDocument>,

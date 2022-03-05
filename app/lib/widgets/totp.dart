@@ -84,12 +84,10 @@ class _TotpWidgetState extends State<TotpWidget>
 				children: <Widget>[
 					if (widget.hasBiometric) IconButton(
 						icon     : const Icon(Icons.fingerprint, color: appColor),
-						color    : buttonColor,
 						onPressed: () => _authenticate()
 					),
 					IconButton(
 						icon     : const Icon(Icons.delete_outline, color: appColor),
-						color    : buttonColor,
 						onPressed: () => _delete(context)
 					),
 				],

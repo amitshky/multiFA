@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
+import { get } from 'lodash'
+import logger from '../logger';
 
 const PRIVATE_KEY = config.get('privateKey') as string;
 
@@ -25,10 +27,14 @@ export const decodeFingerprintSession = (token: string, secretKey: string) =>
 {
 	try 
 	{
-		return jwt.verify(token, secretKey);
+		logger.info(token);
+		const payload = jwt.verify(token, secretKey);
+		logger.info(payload);
+		return payload;
 	}
 	catch (error: any)
 	{
-		return null;
+		logger.error(error);
+		return false;
 	}
 }

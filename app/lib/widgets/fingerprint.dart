@@ -8,36 +8,35 @@ import 'package:app/models/userdetails.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 
-class BiometricsTileWidget extends StatefulWidget 
+class FingerprintWidget extends StatefulWidget 
 {
 	final UserDetails userDetails;
 	final void Function(UserDetails) deleteTile;
 
-	const BiometricsTileWidget({ Key? key, required this.userDetails, required this.deleteTile }) : super(key: key);
+	const FingerprintWidget({ Key? key, required this.userDetails, required this.deleteTile }) : super(key: key);
 
 	@override
-	_BiometricsTileState createState() => _BiometricsTileState();
+	_FingerprintState createState() => _FingerprintState();
 }
 
-class _BiometricsTileState extends State<BiometricsTileWidget> 
+class _FingerprintState extends State<FingerprintWidget> 
 {
 	@override
 	Widget build(BuildContext context) 
 	{
 		return ListTile(
 			key      : widget.key,
-			title    : Text(widget.userDetails.email, style: Theme.of(context).textTheme.headline3), 
+			title    : Text(widget.userDetails.email, style: Theme.of(context).textTheme.headline4),
 			tileColor: appBgColor,
-			trailing: Wrap(
+			leading  : const Icon(Icons.verified_user_outlined, color: appColor, size: 32),
+			trailing : Wrap(
 				children: <Widget>[
 					IconButton(
 						icon     : const Icon(Icons.fingerprint, color: appColor),
-						color    : buttonColor,
 						onPressed: () => _authenticate()
 					),
 					IconButton(
 						icon     : const Icon(Icons.delete_outline, color: appColor),
-						color    : buttonColor,
 						onPressed: () => _delete(context)
 					),
 				],
