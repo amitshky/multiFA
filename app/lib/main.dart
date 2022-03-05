@@ -28,6 +28,7 @@ class App extends StatelessWidget
 					headline1: title1TextStyle,
 					headline2: telText1Style,
 					headline3: title2TextStyle,
+					headline4: title3TextStyle,
 					bodyText1: bodyText1Style,
 					bodyText2: telText2Style,
 				)

@@ -20,6 +20,8 @@ dependencies:
   fluttertoast: ^8.0.8
   unique_list: ^1.0.1
   flutter_secure_storage: ^5.0.2
+  http: ^0.13.4
+  dart_jsonwebtoken: ^2.4.1
 
   
 dev_dependencies:

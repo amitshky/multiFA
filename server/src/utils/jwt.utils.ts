@@ -1,5 +1,7 @@
 import jwt from 'jsonwebtoken'
 import config from 'config'
+import { get } from 'lodash'
+import logger from '../logger';
 
 const PRIVATE_KEY = config.get('privateKey') as string;
 
@@ -18,5 +20,19 @@ export const decode = (token: string) =>
 	catch (error: any)
 	{
 		return { valid: false, expired: error.message === 'jwt expired', decoded: null };
+	}
+}
+
+export const decodeFingerprintSession = (token: string, secretKey: string) =>
+{
+	try 
+	{
+		const payload = jwt.verify(token, secretKey);
+		return payload;
+	}
+	catch (error: any)
+	{
+		logger.error(error);
+		return false;
 	}
 }

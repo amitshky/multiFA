@@ -8,7 +8,7 @@ export const createUserSchema = object({
 			.required('Email is required.'),
 		password: string()
 			.required('Password is required.')
-			.matches(/^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$/,
+			.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
 				'The password must contain at least 8 characters, one lowercase, one number, and should not be same as your username or email.')
 			.notOneOf([ref('email'), ref('username'), null], 'The password should not be same as your username or email.'),
 		passwordConfirmation: string()
@@ -23,7 +23,7 @@ export const createUserSessionSchema = object({
 			.required('Email is required.'),
 		password: string()
 			.required('Password is required.')
-			//.matches(/^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$/,
+			//.matches(/^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/,
 			//	'The password must contain at least 8 characters, one lowercase, one number, and should not be same as your username or email.')
 	})
 });

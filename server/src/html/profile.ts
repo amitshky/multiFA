@@ -1,3 +1,6 @@
+const profileHtml = (username: string, email: string) =>
+{
+	return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,8 +33,11 @@
 				</div>
 			</div>
 		</div>
-		
 		<button type="submit" class="form__button">Logout</button>
 	</div>
 </body>
 </html>
+	`;
+}
+
+export default profileHtml;

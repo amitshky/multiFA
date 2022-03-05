@@ -21,7 +21,7 @@ app.use(deserializeUser);
 
 app.listen(PORT, (): void => 
 {
-	logger.info(`Listening on http://${HOST}:${PORT}`);
+	logger.info(`Listening on ${HOST}:${PORT}`);
 	connect();
 	routes(app);
 });

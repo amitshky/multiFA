@@ -1,3 +1,6 @@
+const fingerprintRegHtml = (qrData: string) =>
+{
+	return `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,17 +16,21 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/api/sessions/check-3fa" id="qrForm" class="form" method="POST">
-			<h1 class="form__title">Fingerprint Verification</h1>
+		<form action="/api/users/reg-3fa" id="qrForm" class="form" method="POST">
+			<h1 class="form__title">Fingerprint Registration</h1>
 			<div class="qr_container">
-				<img src="./assets/fingerprint.png" width="50">
+				<img src="${qrData}" width="200">
 			</div>
-			<label class="align_center"> Please use the app to verify your fingerprint. </label>
+			<label class="align_center"> Please use the app to scan the QR code and verify your fingerprint. </label>
 			<button type="submit" class="form__button">Verify</button>
 			<p class="form__text">
-				<a class="form__link" href="/register" id='linkCreateAccount'>Back to login</a>
+				<a class="form__link" href="/register" id='linkCreateAccount'>Back to regsitration</a>
 			</p>
 		</form>
 	</div>
 </body>
 </html>
+	`;
+}
+
+export default fingerprintRegHtml;

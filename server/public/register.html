@@ -13,7 +13,7 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/api/users" id="registrationForm" class="form" method="POST">
+		<form action="/api/users" id="registrationForm" class="form" method="POST" onsubmit="handleRequiredCheckboxGroup()">
 			<h1 class="form__title">Register</h1>
 			<div class="form__input-group">
 				<input 
@@ -46,7 +46,7 @@
 					name          = "password" 
 					id            = "password" 
 					placeholder   = "Password"
-					pattern       = "^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$" 
+					pattern       = "^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" 
 					autofocus
 					required
 				/>
@@ -58,34 +58,45 @@
 					name          = "passwordConfirmation" 
 					id            = "passwordConfirmation" 
 					placeholder   = "Confirm password"
-					pattern       = "^(?=.*\d)(?=.*[a-z])(?=.*[a-zA-Z]).{8,}$" 
+					pattern       = "^(?=.*\d)(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$" 
 					autofocus
 					required
 				/>
 			</div>
-			<div class="form__input-group">
-				<label>Select Authentication Type: </label>
+			<div class="form__input-group required_checkbox_group">
+				<label for="multiFactorOptions" style="margin-bottom: 0.5rem;">Select Authentication Type: </label>
 				<input 
 					class         = ""
 					type          = "radio" 
 					name          = "multiFactorOptions" 
 					id            = "twoFactor" 
-					value		  = "One Time Password"
-					checked
+					value         = "totp"
 					autofocus
 					required
-				/> <label for="twoFactor" class="inline_display">One Time Password</label>
+					checked
+				/> <label for="twoFactor" class="inline_display">Time-based OTP</label>
 				<input 
 					class         = ""
 					type          = "radio" 
 					name          = "multiFactorOptions" 
 					id            = "threeFactor" 
-					value		  = "Fingerprint"
+					value         = "fingerprint"
+					style         = "margin-left: 3rem;"
 					autofocus
 					required
 				/> <label for="threeFactor" class="inline_display">Fingerprint</label>
+				<input 
+					class         = ""
+					type          = "radio" 
+					name          = "multiFactorOptions" 
+					id            = "both" 
+					value         = "both"
+					style         = "margin-left: 3rem;"
+					autofocus
+					required
+				/> <label for="threeFactor" class="inline_display">Both</label>
 			</div>
-			<button type="submit" class="form__button">Continue</button>
+			<button type="submit" class="form__button" >Continue</button>
 			<p class="form__text">
 				<a class="form__link" href="/login" id='linkCreateAccount'>Already have an account? Sign In</a>
 			</p>
@@ -93,7 +104,7 @@
 				The password must contain at least
 				<ul>
 					<li>8 characters</li>
-					<li>one lowercase character</li>
+					<li>one uppercase character</li>
 					<li>one number</li>
 					<li>and should not be same as your username or email.</li>
 				</ul> 
@@ -102,10 +113,26 @@
 	</div>
 </body>
 <script>
-	//var username = document.getElementById('username');
-	//username.oninvalid = function(event)
-	//{
-	//	event.target.setCustomValidity('Username should only contain alphanumeric character and underscore, and should be at least 4 characters long (e.g, _username, user_name, username_).');
-	//}
+	function handleRequiredCheckboxGroup() 
+	{
+		var formData = new FormData(document.querySelector("form"))
+
+		if(formData.has("multiFactorOptions")) 
+		{
+			document.getElementsByName("multiFactorOptions").forEach(function(item, index, array) 
+			{
+				item.setAttribute("required", false);
+			});
+			return true;
+		} 
+		else 
+		{
+			document.getElementsByName("multiFactorOptions").forEach(function(item, index, array) 
+			{
+				item.setAttribute("required", true);
+			});
+			return false;
+		}
+	}
 </script>
 </html>

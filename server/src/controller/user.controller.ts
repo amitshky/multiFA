@@ -1,11 +1,10 @@
 import { Request, Response } from 'express'
-import { omit, get } from 'lodash'
 import config from 'config'
 import qrcode from 'qrcode'
+import { get } from 'lodash'
 
 import logger from '../logger'
 import { createUser } from '../service/user.service'
-import { qrcodeHtml } from '../html'
 
 
 export const createUserHandler = async (req: Request, res: Response) =>
@@ -15,34 +14,60 @@ export const createUserHandler = async (req: Request, res: Response) =>
 		const user   = await createUser(req.body);
 		const qrData = await user.generateSSKey();
 		user.save();
+
+		let nextPath : string | undefined       = undefined;
+		let nextUserIDPath : string | undefined = undefined;
+
+		switch (get(req, 'body.multiFactorOptions'))
+		{
+			case 'totp':
+				nextPath       = '/reg-2fa';
+				nextUserIDPath = '/api/users/reg-2fa';
+				break;
+			
+			case 'fingerprint':
+				nextPath       = '/reg-3fa';
+				nextUserIDPath = '/api/users/reg-3fa';
+				break;
+
+			case 'both':
+				nextPath       = '/reg-2fa';
+				nextUserIDPath = '/api/users/reg-2fa';
+				break;
+		}
+
+		if (!nextPath || !nextUserIDPath)
+			return res.redirect('/error?msg=Error+in+selecting+authentication+type&status=400');
+
 		qrcode.toDataURL(decodeURIComponent(qrData), (err, data: string) =>
 		{
 			if (err)
 			{
 				logger.error(err);
-				return res.status(500).send('Unable to generate QR code!');
+				return res.redirect('/error?msg=Unable+to+generate+QR+code&status=500'); // unexpected condition
 			}
 			else
 			{
+				// WARNINIG: this is stupid
+				// TODO: change it to something more secure
 				res.cookie('qrData', data, { // to display QR code in /reg-2fa
-					maxAge: 300000, // 5 min
+					maxAge  : config.get('verificationCookiesTTL'), // 5 min
 					httpOnly: true,
-					domain: config.get('host'),
-					path: '/reg-2fa',
+					domain  : config.get('host'),
+					path    : nextPath,
 					sameSite: 'strict',
-					secure: false,
+					secure  : false,
 				});
-
 				res.cookie('userID', user._id, {
-					maxAge: 300000, // 5 min
+					maxAge  : config.get('verificationCookiesTTL'), // 5 min
 					httpOnly: true,
-					domain: config.get('host'),
-					path: '/api/users/reg-2fa',
+					domain  : config.get('host'),
+					path    : nextUserIDPath,
 					sameSite: 'strict',
-					secure: false,
+					secure  : false,
 				});
 		
-				return res.redirect('/reg-2fa');
+				return res.redirect(nextPath!);
 				//return res.json(omit(user.toJSON(), 'password', '__v')); // omit becuz deleting mutates the object 
 			}
 		});
@@ -50,15 +75,6 @@ export const createUserHandler = async (req: Request, res: Response) =>
 	catch (err: any)
 	{
 		logger.error(err);
-		return res.status(409).send(err.message);
+		return res.redirect(`/error?msg=${encodeURIComponent(err.message)}&status=409`);
 	}
-}
-
-export const register2faHandler = async (req: Request, res: Response) =>
-{
-	const qrData = get(req, 'cookies.qrData');
-	if (!qrData)
-		return res.sendStatus(403); // forbidden
-		
-	res.send(qrcodeHtml(qrData));
 }

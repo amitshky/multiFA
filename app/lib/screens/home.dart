@@ -1,10 +1,10 @@
 import 'package:app/style.dart';
+import 'package:app/widgets/fingerprint.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:app/widgets/totp.dart';
 import 'package:app/widgets/scanqr.dart';
-import 'package:app/widgets/fingerprint.dart';
 import 'package:app/models/userdetails.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/user_secure_storage.dart';
@@ -34,7 +34,7 @@ class _HomeScreenState extends State<HomeScreen>
 	@override
 	void dispose()
 	{
-		_saveData(); // locally store user details (email and secret key)
+		_saveData(); // locally store user details
 		super.dispose();
 	}
 
@@ -47,21 +47,27 @@ class _HomeScreenState extends State<HomeScreen>
 				itemCount  : _userDetailsList.length,
 				itemBuilder: (context, index) 
 				{
-					return TotpWidget(
-						key        : UniqueKey(), 
-						userDetails: _userDetailsList[index], 
-						deleteTile : _deleteTile,
-					);
+					if (_userDetailsList[index].multiFactorOptions == 'fingerprint')
+					{
+						return FingerprintWidget(
+							key        : UniqueKey(), 
+							userDetails: _userDetailsList[index], 
+							deleteTile : _deleteTile
+						);
+					}
+					else 
+					{
+						return TotpWidget(
+							key         : UniqueKey(), 
+							userDetails : _userDetailsList[index], 
+							deleteTile  : _deleteTile,
+							hasBiometric: _userDetailsList[index].multiFactorOptions == 'both'
+						);
+					}
 				},
 				separatorBuilder: (context, index) => const Divider(color: dividerColor, indent: 16.0, endIndent: 16.0),
 			),
-			bottomNavigationBar: Row(
-				mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-				children: <Widget>[ 
-					const FingerprintWidget(),
-					ScanQRPage(getQRData: _getQRData),
-				]
-			),
+			bottomNavigationBar: ScanQRPage(getQRData: _getQRData),
 		);
 	}
 
@@ -70,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen>
 		final idx = _userDetailsList.indexOf(obj);
 		_idSet.remove(_userDetailsList[idx].secretKey);
 		setState(() => _userDetailsList.removeAt(idx));
-		_saveData(); // locally store user details (email and secret key)
+		_saveData(); // locally store user details
 	}
 
 	void _getQRData(String data) // data is an otpauth uri
@@ -78,12 +84,12 @@ class _HomeScreenState extends State<HomeScreen>
 		final uriDecoded = otpauthUriDecode(data);
 		if (uriDecoded  != null)
 		{
-			final item = UserDetails(email: uriDecoded['email']!, secretKey: uriDecoded['secretKey']!);
+			final item = UserDetails(multiFactorOptions: uriDecoded['multiFactorOptions']!, email: uriDecoded['email']!, secretKey: uriDecoded['secretKey']!);
 
 			if (_idSet.add(item.secretKey))
 			{
 				setState(() => _userDetailsList.add(item));
-				_saveData(); // locally store user details (email and secret key)
+				_saveData(); // locally store user details
 			}
 			else
 			{
@@ -110,12 +116,13 @@ class _HomeScreenState extends State<HomeScreen>
 					}
 				}
 			});
+
 		setState(() {}); // screen not updating after initState() without this
 	}
 
 	Future<void> _saveData() async
 	{
-		UserSecureStorage.save(_userDetailsList); // locally store user details (email and secret key)
+		UserSecureStorage.save(_userDetailsList); // locally store user details
 		setState(() {}); // just to make sure the state is updated ; probably not needed
 	}
 }
