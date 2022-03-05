@@ -109,20 +109,6 @@ OR,
 * **Website:** https://multifa.herokuapp.com/
 * **Android App:** https://github.com/amitshky/multiFA/releases
 
-### User Registration
-* Open `localhost:5000/register`\
-	<img src="img/register.png" width=450>
-
-* The user details will also be added to the database.
-
-### Login
-* Open `localhost:5000/login`\
-	<img src="img/login.png" width=450>
-
-### TOTP verification
-* After login:\
-	<img src="img/totp.png" width=450>
-
 ### Android Application
 * Home page\
 	<img src="img/app.png" width=300>
@@ -132,3 +118,35 @@ OR,
 
 * QR code scan page\
 	<img src="img/appQrscan.png" width=300>
+
+
+### User Registration
+* Open `multifa.herokuapp.com/register`\
+	<img src="img/register.png" width=450>
+
+#### TOTP Registration
+* After login:\
+	<img src="img/totpSetup.png" width=450>
+
+#### Fingerprint Registration
+* After login:\
+	<img src="img/fingerprintRegistration.png" width=450>
+
+### Login
+* Open `multifa.herokuapp.com/login`\
+	<img src="img/login.png" width=450>
+
+#### TOTP verification
+* After login:\
+	<img src="img/totp.png" width=450>
+
+#### Fingerprint verification
+* After login:\
+	<img src="img/fingerprintVerification.png" width=450>
+
+#### Profile
+* After login:\
+	<img src="img/profile.png" width=450>
+
+
+
