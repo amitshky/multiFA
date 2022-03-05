@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import 'package:app/style.dart';
 import 'package:app/api/totp_api.dart';
+import 'package:app/api/http_api.dart';
+import 'package:app/api/local_auth_api.dart';
 import 'package:app/models/userdetails.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -11,8 +13,9 @@ class TotpWidget extends StatefulWidget
 {
 	final UserDetails userDetails;
 	final void Function(UserDetails) deleteTile;
+	final bool hasBiometric;
 
-	const TotpWidget({ Key? key, required this.userDetails, required this.deleteTile }) : super(key: key);
+	const TotpWidget({ Key? key, required this.userDetails, required this.deleteTile, required this.hasBiometric }) : super(key: key);
 
 	@override
 	_TotpWidgetState createState() => _TotpWidgetState();
@@ -26,27 +29,24 @@ class _TotpWidgetState extends State<TotpWidget>
 	late int timeRemaining;
 
 	@override
-	void initState() 
+	void initState()
 	{
 		super.initState();
 		unixTime      = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 		totp          = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 		timeRemaining = 30 - (unixTime % 30);
 
-		if (mounted)
+		timer = Timer.periodic(const Duration(seconds: 1), (_)
 		{
-			timer = Timer.periodic(const Duration(seconds: 1), (_)
+			setState(()
 			{
-				setState(()
-				{
-					unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+				unixTime = DateTime.now().millisecondsSinceEpoch ~/ 1000;
 
-					if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
+				if ((unixTime % 30) == 0) totp = TOTP.generateTOTP(widget.userDetails.secretKey, unixTime);
 
-					timeRemaining = 30 - (unixTime % 30);
-				});
+				timeRemaining = 30 - (unixTime % 30);
 			});
-		}
+		});
 	}
 
 	@override
@@ -80,10 +80,17 @@ class _TotpWidgetState extends State<TotpWidget>
 					],
 				),
 			),
-			trailing: IconButton(
-				icon     : const Icon(Icons.delete_outline, color: appColor),
-				color    : buttonColor,
-				onPressed: () => _delete(context)
+			trailing: Wrap(
+				children: <Widget>[
+					if (widget.hasBiometric) IconButton(
+						icon     : const Icon(Icons.fingerprint, color: appColor),
+						onPressed: () => _authenticate()
+					),
+					IconButton(
+						icon     : const Icon(Icons.delete_outline, color: appColor),
+						onPressed: () => _delete(context)
+					),
+				],
 			),
 		);
 	}
@@ -110,7 +117,7 @@ class _TotpWidgetState extends State<TotpWidget>
 				return AlertDialog(
 					key    : widget.key,
 					title  : const Text('Please Confirm', style: TextStyle(color: textColor)),
-					content: const Text('Are you sure you want to remove this TOTP?', style: TextStyle(color: textColor)),
+					content: const Text('Are you sure you want to remove this account?', style: TextStyle(color: textColor)),
 					backgroundColor: buttonColor,
 					actions: <Widget>[
 						TextButton( // "Yes" button
@@ -118,7 +125,7 @@ class _TotpWidgetState extends State<TotpWidget>
 							onPressed: ()
 							{
 								Navigator.of(context).pop(); // Close the dialog
-								Fluttertoast.showToast(msg: 'TOTP removed.', backgroundColor: buttonColor);
+								Fluttertoast.showToast(msg: 'Account removed.', backgroundColor: buttonColor);
 								widget.deleteTile(widget.userDetails);
 							},
 						),
@@ -130,5 +137,18 @@ class _TotpWidgetState extends State<TotpWidget>
 				);
 			}
 		);
+	}
+
+	Future<void> _authenticate() async
+	{
+		{
+			final isAuthenticated = await LocalAuthApi.authenticate();
+			if (isAuthenticated)
+			{
+				// TODO: create a dialog that says "Authenticated"
+				await HttpApi.sendVerification(widget.userDetails.email, widget.userDetails.secretKey);
+				Fluttertoast.showToast(msg: 'Authentication sent.', backgroundColor: buttonColor);
+			}
+		}
 	}
 }

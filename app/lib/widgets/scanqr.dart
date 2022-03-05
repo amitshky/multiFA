@@ -21,7 +21,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 	{
 		return ElevatedButton.icon(
 			icon : const Icon(Icons.add, size: 26, color: appColor),
-			label: Text('Add TOTP', style: Theme.of(context).textTheme.bodyText1),
+			label: Text('Add account', style: Theme.of(context).textTheme.bodyText1),
 			style: ElevatedButton.styleFrom(
 				primary  : appBgColor,
 				elevation: 0,
@@ -37,7 +37,7 @@ class _ScanQRPageState extends State<ScanQRPage>
 			FlutterBarcodeScanner.scanBarcode(appColorHex, 'Cancel', true, ScanMode.QR)
 				.then((value) => setState(() => widget.getQRData(value)));
 		}
-		catch(e)
+		catch(_)
 		{
 			Fluttertoast.showToast(msg: 'Scan unsuccessful.', backgroundColor: buttonColor);
 		}

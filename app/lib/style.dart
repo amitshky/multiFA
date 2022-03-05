@@ -52,12 +52,13 @@ const MaterialColor buttonColor    = MaterialColor(0xFF2C2C2C, _buttonColor); //
 
 
 // Fonts
-const double largeTextSize  = 32.0;
-const double mediumTextSize = 20.0;
-const double bodyTextSize   = 14.0;
+const double largeTextSize   = 32.0;
+const double mediumTextSize  = 20.0;
+const double body1TextSize   = 16.0;
+const double bodyTextSize    = 14.0;
 
-const String appBarFont  = 'Montserrat';
-const String consolas    = 'Consolas';
+const String appBarFont = 'Montserrat';
+const String consolas   = 'Consolas';
 
 const appBarTextStyle = TextStyle(
 	fontFamily: appBarFont,
@@ -75,6 +76,12 @@ const title1TextStyle = TextStyle(
 const title2TextStyle = TextStyle(
 	fontWeight: FontWeight.w500,
 	fontSize  : mediumTextSize,
+	color     : textColor,
+);
+
+const title3TextStyle = TextStyle(
+	fontWeight: FontWeight.w500,
+	fontSize  : body1TextSize,
 	color     : textColor,
 );
 

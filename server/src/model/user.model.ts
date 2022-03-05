@@ -8,23 +8,33 @@ export const privateFields = ['password', 'sskey', '__v']; // private fields of 
 
 const UserSchema = new mongoose.Schema({
 	email: {
-		type: String,
+		type    : String,
 		required: true,
-		unique: true
+		unique  : true
 	},
 	username: {
-		type: String,
+		type    : String,
 		required: true,
-		unique: true
+		unique  : true
 	},
 	password: {
-		type: String,
+		type    : String,
 		required: true
 	},
 	sskey: { // shared secret key for totp verification
-		type: String,
+		type    : String,
 		required: true,
-		default: 'N/A'
+		default : 'N/A'
+	},
+	multiFactorOptions: { // the options are 'totp', 'fingerprint', and 'both'
+		type    : String,
+		required: true,
+		default : 'totp'
+	},
+	sessionToken: { // for fingerprint validation
+		type    : String,
+		required: true,
+		default : 'N/A'
 	}
 }, { timestamps: true });
 
@@ -32,12 +42,14 @@ const UserSchema = new mongoose.Schema({
 // so that we can get our custom type definitions on the schema
 export interface UserDocument extends mongoose.Document
 {
-	email: string;
-	username: string;
-	password: string;
-	sskey: string;
-	createdAt: Date;
-	UpdatedAt: Date;
+	email             : string;
+	username          : string;
+	password          : string;
+	sskey             : string;
+	multiFactorOptions: string;
+	sessionToken      : string;
+	createdAt         : Date;
+	UpdatedAt         : Date;
 
 	generateSSKey(): Promise<string>;
 
@@ -66,10 +78,14 @@ UserSchema.pre('save', async function(next)
 
 UserSchema.methods.generateSSKey = async function (): Promise<string>
 {
-	const user = this as UserDocument;
-	const secret = speakeasy.generateSecret({ name: user.username });
-	user.sskey = secret.base32;
-	return secret.otpauth_url!;
+	const user   = this as UserDocument;
+	const secret = speakeasy.generateSecret({ name: user.email });
+	user.sskey   = secret.base32;
+
+	// custom otpauth uri becuz we have to send multifactor option data to the app
+	// format of the uri: multifa://{multiFactorOptions}?email={email}&secret={secretKey}
+	const otpauthUri = `multifa://${user.multiFactorOptions}?email=${user.email}&secret=${user.sskey}`;
+	return otpauthUri;
 }
 
 UserSchema.methods.comparePassword = async function (candidatedPassword: string): Promise<boolean>

@@ -19,7 +19,7 @@ const validateRequest = (schema: AnySchema) => async (req: Request, res: Respons
 	catch (err: any)
 	{
 		logger.error(err);
-		return res.status(400).send(err.errors); 
+		return res.redirect(`/error?msg=${encodeURIComponent(err.errors)}&status=400`);
 	}
 }
 

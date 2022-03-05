@@ -13,35 +13,35 @@
 </head>
 <body>
 	<div class="container">
-		<form action="/api/sessions" id="loginForm" class="form" method="POST">
-			<h1 class="form__title">Login</h1>
+		<form action="/api/users/reg-2fa" id="qrForm" class="form" method="POST">
+			<h1 class="form__title">Two-factor authentication</h1>
+
+			<div class="qr_container">
+				<img src="${qrdata}" width="200">
+			</div>
+
+			<label for="token"> Use your token generator app to scan and generate a token, and enter it below. </label>
+
 			<div class="form__input-group">
 				<input 
 					class         = "form__input"
 					type          = "text" 
-					name          = "email" 
-					id            = "email" 
-					placeholder   = "Email" 
-					pattern       = "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" 
-					autofocus
-					required
-				/>
-				</div>
-			<div class="form__input-group">
-				<input 
-					class         = "form__input"
-					type          = "password" 
-					name          = "password" 
-					id            = "password" 
-					placeholder   = "Password"
-					autocomplete  = "current-password"
+					name          = "token"
+					id            = "token"
+					placeholder   = "Scan and enter the token"
+					inputmode     = "numeric"
+					pattern       = "[0-9]*" 
+					minlength     = "6" 
+					maxlength     = "6" 
+					autocomplete  = "one-time-code"
 					autofocus
 					required
 				/>
 			</div>
-			<button type="submit" class="form__button">Continue</button>
+
+			<button type="submit" class="form__button">Verify</button>
 			<p class="form__text">
-				<a class="form__link" href="/register" id='linkCreateAccount'>Need an account? Create One</a>
+				<a class="form__link" href="/register" id='linkCreateAccount'>Back to registration</a>
 			</p>
 		</form>
 	</div>
