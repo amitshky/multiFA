@@ -12,6 +12,20 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" href="./styles.css">
 </head>
+<script src=
+"https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js">
+	</script>
+<script>
+	function makeDELETErequest() {
+		$.ajax({
+			url: '/api/sessions',
+			type: 'DELETE',
+			success: function (result) {
+				console.log('logout done');
+			}
+		});
+	}
+</script>
 <body>
 	<div class="container">
 		<h1 class="form__title">Profile</h1>
@@ -31,7 +45,7 @@
 			</div>
 		</div>
 		
-		<button type="submit" class="form__button">Logout</button>
+		<button type="submit" class="form__button" onclick="makeDELETErequest()">Logout</button>
 	</div>
 </body>
 </html>
