@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 import 'package:app/style.dart';
 import 'package:app/api/http_api.dart';
 import 'package:app/api/local_auth_api.dart';
 import 'package:app/models/userdetails.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class FingerprintWidget extends StatefulWidget 
@@ -28,7 +28,7 @@ class _FingerprintState extends State<FingerprintWidget>
 			key      : widget.key,
 			title    : Text(widget.userDetails.email, style: Theme.of(context).textTheme.headline4),
 			tileColor: appBgColor,
-			leading  : const Icon(Icons.verified_user_outlined, color: appColor, size: 32),
+			leading  : const Icon(Icons.check_circle_rounded, color: appColor, size: 32),
 			trailing : Wrap(
 				children: <Widget>[
 					IconButton(
@@ -36,7 +36,7 @@ class _FingerprintState extends State<FingerprintWidget>
 						onPressed: () => _authenticate()
 					),
 					IconButton(
-						icon     : const Icon(Icons.delete_outline, color: appColor),
+						icon     : const Icon(Icons.delete, color: appColor),
 						onPressed: () => _delete(context)
 					),
 				],

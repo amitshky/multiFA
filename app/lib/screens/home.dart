@@ -1,10 +1,10 @@
-import 'package:app/style.dart';
-import 'package:app/widgets/fingerprint.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
+import 'package:app/style.dart';
 import 'package:app/widgets/totp.dart';
 import 'package:app/widgets/scanqr.dart';
+import 'package:app/widgets/fingerprint.dart';
 import 'package:app/models/userdetails.dart';
 import 'package:app/utils/utils.dart';
 import 'package:app/utils/user_secure_storage.dart';
@@ -108,6 +108,11 @@ class _HomeScreenState extends State<HomeScreen>
 			.then((value) => _userDetailsList = value ?? <UserDetails>[])
 			.whenComplete(()
 			{
+				if (_userDetailsList.isEmpty)
+				{
+					Fluttertoast.showToast(msg: 'Please add an Account.', backgroundColor: buttonColor);
+				}
+
 				for (int i = 0; i < _userDetailsList.length; ++i)
 				{
 					if (!_idSet.add(_userDetailsList[i].secretKey))

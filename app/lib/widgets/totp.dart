@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
+import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:app/style.dart';
 import 'package:app/api/totp_api.dart';
 import 'package:app/api/http_api.dart';
 import 'package:app/api/local_auth_api.dart';
 import 'package:app/models/userdetails.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 
 class TotpWidget extends StatefulWidget 
@@ -87,7 +88,7 @@ class _TotpWidgetState extends State<TotpWidget>
 						onPressed: () => _authenticate()
 					),
 					IconButton(
-						icon     : const Icon(Icons.delete_outline, color: appColor),
+						icon     : const Icon(Icons.delete, color: appColor),
 						onPressed: () => _delete(context)
 					),
 				],
