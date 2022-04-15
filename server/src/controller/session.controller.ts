@@ -18,8 +18,7 @@ import {
 	updateSession, 
 	findSessions 
 } from '../service/session.service'
-import { sign, decodeFingerprintSession } from '../utils/jwt.utils'
-import logger from '../logger'
+import { sign } from '../utils/jwt.utils'
 
 
 export const createUserSessionHandler = async (req: Request, res: Response) =>
@@ -69,6 +68,23 @@ export const invalidateUserSessionHandler = async (req: Request, res: Response) 
 {
 	const sessionID = get(req, 'user.session');
 	await updateSession({ _id: sessionID }, { valid: false });
+
+	res.cookie('accessToken', null, {
+		maxAge  : 900000, // 15 mins
+		httpOnly: true,
+		domain  : config.get('host'),
+		path    : '/',
+		sameSite: 'strict',
+		secure  : false,
+	});
+	res.cookie('refreshToken', null, {
+		maxAge  : 3.154e10, // 1 year
+		httpOnly: true,
+		domain  : config.get('host'),
+		path    : '/',
+		sameSite: 'strict',
+		secure  : false,
+	});
 	return res.redirect('/');
 }
 

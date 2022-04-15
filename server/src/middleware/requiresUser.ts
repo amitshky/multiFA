@@ -1,8 +1,6 @@
 import { get } from 'lodash'
 import { Request, Response, NextFunction } from 'express'
 
-import { errorHtml } from '../html';
-
 
 const requiresUser = async (req: Request, res: Response, next: NextFunction) =>
 {
