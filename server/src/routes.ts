@@ -64,7 +64,7 @@ const routes = (app: Express): void =>
 	// get the user's sessions
 	app.get('/api/sessions', requiresUser, getUserSessionsHandler);
 	// logout // delete session
-	app.delete('/api/sessions', requiresUser, invalidateUserSessionHandler);
+	app.post('/api/sessions/logout', requiresUser, invalidateUserSessionHandler);
 
 	// error route
 	app.get('/error', errorPageHandler)
