@@ -1,7 +1,17 @@
 # multiFA
-Multi-factor Authentication. The server-side code for this project has been hosted [here](https://multifa.herokuapp.com/).
+This is a project on Multi-factor Authentication System. We have an [android application](https://github.com/amitshky/multiFA/releases) and a simple [website](https://multifa.herokuapp.com/). You can register an account from the [website](https://multifa.herokuapp.com/) and select one of the three Authentication options - Time-based One Time Password (TOTP) verification, or Fingerprint verification, or both - which you can use along side Password verfication during login. The [android application](https://github.com/amitshky/multiFA/releases) generates TOTP, and verify fingerprint.
+
+The android application was built for Android 7 and above.
+
+## Usage
+* Download and install the apk of the [android application](https://github.com/amitshky/multiFA/releases).
+* Open the [website](https://multifa.herokuapp.com/) and register an account and choose an Authentication option.
+* Set up authentication options in the android application by scanning the QR code.
+* You can then login in the website and try out the different authentication options.
 
 ## Getting Started
+These instructions are for getting a copy of the project running on your machine for development and testing.
+
 ### Prerequisites
 * [Node.js](https://nodejs.org/en/)
 * [Flutter](https://docs.flutter.dev/get-started/install)
