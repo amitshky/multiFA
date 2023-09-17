@@ -1,13 +1,13 @@
 # multiFA
-This is a project on Multi-factor Authentication System. We have an [android application](https://github.com/amitshky/multiFA/releases) and a simple [website](https://multifa.herokuapp.com/). You can register an account from the [website](https://multifa.herokuapp.com/) and select one of the three Authentication options - Time-based One Time Password (TOTP) verification, or Fingerprint verification, or both - which you can use along side Password verfication during login. The [android application](https://github.com/amitshky/multiFA/releases) generates TOTP, and verify fingerprint.
+This is a project on Multi-factor Authentication System. We have an [android application](https://github.com/amitshky/multiFA/releases) (NOTE: this site may not work anymore, Heroku might have stopped hosting it) and a simple [website](https://multifa.herokuapp.com/). You can register an account from the [website](https://multifa.herokuapp.com/) and select one of the three Authentication options - Time-based One Time Password (TOTP) verification, or Fingerprint verification, or both - which you can use alongside Password verification during login. The [android application](https://github.com/amitshky/multiFA/releases) generates TOTP and verifies fingerprint.
 
-The android application was built for Android 7 and above.
+The Android application was built for Android 7 and above.
 
 ## Usage
-* Download and install the apk of the [android application](https://github.com/amitshky/multiFA/releases).
+* Download and install the APK of the [android application](https://github.com/amitshky/multiFA/releases).
 * Open the [website](https://multifa.herokuapp.com/) and register an account and choose an Authentication option.
-* Set up authentication options in the android application by scanning the QR code.
-* You can then login in the website and try out the different authentication options.
+* Set up authentication options in the Android application by scanning the QR code.
+* You can then login to the website and try out the different authentication options.
 
 ## Getting Started
 These instructions are for getting a copy of the project running on your machine for development and testing.
@@ -95,7 +95,7 @@ OR,
 	```
 * OR, use vscode [flutter](https://marketplace.visualstudio.com/items?itemName=Dart-Code.flutter) extension.
 
-* Build and run app in release mode
+* Build and run the app in release mode
 	```
 	cd app
 	flutter run --release
